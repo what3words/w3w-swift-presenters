@@ -15,12 +15,18 @@ public class W3WSelectableSuggestions: W3WEventSubscriberProtocol {
   var suggestions = [W3WSelectableSuggestion]()
 
   //var update: () -> () = { }
-  var update = W3WEvent<Bool>()
+  public var update = W3WEvent<Bool>()
   
-  var selectedSuggestions: [W3WSuggestion] {
+  public var selectedSuggestions: [W3WSuggestion] {
     get {
       return suggestions.filter({ i in i.selected.value ?? false }).map { i in return i.suggestion }
     }
+  }
+  
+  
+  public init(suggestions: [W3WSelectableSuggestion] = [], update: W3WEvent<Bool> = W3WEvent<Bool>()) {
+    self.suggestions = suggestions
+    self.update = update
   }
   
   

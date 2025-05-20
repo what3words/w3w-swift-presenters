@@ -17,6 +17,12 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
   var theme: W3WTheme? = .what3words
 
   
+  public init(viewModel: ViewModel, theme: W3WTheme? = nil) {
+    self.viewModel = viewModel
+    self.theme = theme
+  }
+  
+  
   public var body: some View {
     ZStack {
       if viewModel.items.list.count > 0 {

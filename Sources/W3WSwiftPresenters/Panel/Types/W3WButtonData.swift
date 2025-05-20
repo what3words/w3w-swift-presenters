@@ -16,4 +16,11 @@ public struct W3WButtonData: Identifiable {
   var title: String?
   var onTap: () -> ()
   
+  public init(icon: W3WImage? = nil, title: String? = nil, onTap: @escaping () -> Void) {
+    self.id = UUID()
+    self.icon = icon
+    self.title = title
+    self.onTap = onTap
+  }
+  
 }
