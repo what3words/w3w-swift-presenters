@@ -1,0 +1,42 @@
+{
+  "originHash" : "4c22b37e20e9855862aba7c482e4d7affd1eca1a1c6d51d623ee5e36d657ae88",
+  "pins" : [
+    {
+      "identity" : "w3w-swift-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/what3words/w3w-swift-core.git",
+      "state" : {
+        "branch" : "staging",
+        "revision" : "b00c40eeb249645138e705a3def58eee20f73fb0"
+      }
+    },
+    {
+      "identity" : "w3w-swift-design",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/what3words/w3w-swift-design.git",
+      "state" : {
+        "branch" : "staging",
+        "revision" : "1d7aecf21d54c9d7d02a589bb374ecec4f8adbbc"
+      }
+    },
+    {
+      "identity" : "w3w-swift-design-swiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "git@github.com:what3words/w3w-swift-design-swiftui.git",
+      "state" : {
+        "branch" : "staging",
+        "revision" : "e6c8b320fef8cb5c1e860185b45e358b29830770"
+      }
+    },
+    {
+      "identity" : "w3w-swift-themes",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/what3words/w3w-swift-themes.git",
+      "state" : {
+        "branch" : "staging",
+        "revision" : "7178324ad5167ce467f6c90eb04665cf98b4940f"
+      }
+    }
+  ],
+  "version" : 3
+}
