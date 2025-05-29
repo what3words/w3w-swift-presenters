@@ -17,7 +17,9 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
   var buttons: [W3WButtonData]
   
   var text: W3WLive<W3WString>
-  
+
+  var scheme: W3WScheme?
+
   @State var liveText = W3WString()
 
   // view model
@@ -36,14 +38,15 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
           if let title = button.title {
             Button(action: { button.onTap() }, label: { Text(button.title ?? "") })
               .padding(EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0))
-              .foregroundColor(W3WColor.darkBlue.suColor)
-              .background(W3WColor.lightBlue.suColor)  //(viewModel.scheme?.colors?.secondaryBackground?.current.suColor)
+              .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
+              .background(scheme?.colors?.secondaryBackground?.current.suColor)
               .clipShape(Capsule())
           }
         }
       }
     //}
     .padding()
+    .background(scheme?.colors?.background?.current.suColor)
     
     .onAppear { // Subscribe to the text changes
       //if let t = text {

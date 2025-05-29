@@ -14,12 +14,12 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
   // main view model
   @ObservedObject var viewModel: ViewModel
 
-  var theme: W3WTheme? = .what3words
+  var scheme: W3WScheme?
 
   
-  public init(viewModel: ViewModel, theme: W3WTheme? = nil) {
+  public init(viewModel: ViewModel, scheme: W3WScheme? = nil) {
     self.viewModel = viewModel
-    self.theme = theme
+    self.scheme = scheme
   }
   
   
@@ -28,17 +28,18 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
       if viewModel.items.list.count > 0 {
         ScrollView {
           ForEach((0...viewModel.items.listNoFooters.count - 1), id: \.self) { index in
-            W3WPanelRowView(viewModel: viewModel, item: viewModel.items.listNoFooters[index])
+            W3WPanelRowView(viewModel: viewModel, item: viewModel.items.listNoFooters[index], scheme: scheme)
           }
         }
       }
       if let footer = viewModel.items.getFooter() {
         VStack {
           Spacer()
-          W3WPanelRowView(viewModel: viewModel, item: viewModel.items.list[0])
+          W3WPanelRowView(viewModel: viewModel, item: viewModel.items.list[0], scheme: scheme)
         }
       }
     }
+    .background(scheme?.colors?.background?.current.suColor)
   }
 }
 
@@ -50,7 +51,7 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
 
   var items = W3WPanelViewModel()
 
-  W3WPanelScreen(viewModel: items)
+  W3WPanelScreen(viewModel: items, scheme: .w3w)
 }
 
 

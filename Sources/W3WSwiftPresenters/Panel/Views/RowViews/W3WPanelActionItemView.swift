@@ -17,6 +17,7 @@ struct W3WPanelActionItemView: View {
   var icon: W3WImage
   var text: W3WLive<W3WString>
   var button: W3WButtonData
+  @State var scheme: W3WScheme?
 
   @State var liveText = NSAttributedString()
 

@@ -13,7 +13,7 @@ struct W3WPanelHeadingView<ViewModel: W3WPanelViewModelProtocol>: View {
   
   var title: W3WString
 
-  var scheme: W3WScheme? = .w3w
+  var scheme: W3WScheme?
 
   // view model
   @ObservedObject var viewModel: ViewModel

@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import W3WSwiftThemes
+
 
 struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
   
@@ -14,29 +16,32 @@ struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
   
   let item: W3WPanelItem
   
+  var scheme: W3WScheme?
+
+  
   var body: some View {
     switch item {
         
       case .heading(let text):
-        W3WPanelHeadingView(title: text.value, viewModel: viewModel)
+        W3WPanelHeadingView(title: text.value, scheme: scheme, viewModel: viewModel)
         
       case .message(let message):
-        W3WPanelMessageView(message: message, viewModel: viewModel)
+        W3WPanelMessageView(message: message, scheme: scheme, viewModel: viewModel)
         
       case .actionItem(icon: let icon, text: let text, let button):
-        W3WPanelActionItemView(icon: icon, text: text, button: button)
+        W3WPanelActionItemView(icon: icon, text: text, button: button, scheme: scheme)
         
       case .buttons(let buttons, text: let text):
-        W3WPanelButtonsView(buttons: buttons, text: text, viewModel: viewModel)
+        W3WPanelButtonsView(buttons: buttons, text: text, scheme: scheme, viewModel: viewModel)
         
       case .tappableRow(icon: let image, text: let text):
-        W3WPanelTappableRow(icon: image, text: text)
+        W3WPanelTappableRow(icon: image, text: text, scheme: scheme)
         
-        //case .suggestion(let suggestion, let selected):
-        //  W3WPanelSuggestionView(suggestion: suggestion, scheme: theme?.basicScheme(), selected: selected?.value, onTap: { print(suggestion) })
+      //case .suggestion(let suggestion, let selected):
+      //  W3WPanelSuggestionView(suggestion: suggestion, scheme: theme?.basicScheme(), selected: selected?.value, onTap: { print(suggestion) })
         
       case .suggestions(let suggestions):
-        W3WPanelSuggestionsView(suggestions: suggestions)
+        W3WPanelSuggestionsView(suggestions: suggestions, scheme: scheme)
         
         //  W3WPanelMessageView(message: suggestion.words ?? "", viewModel: viewModel)
         

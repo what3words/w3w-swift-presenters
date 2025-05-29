@@ -16,6 +16,8 @@ struct W3WPanelSuggestionsView: View {
 
   var suggestions: W3WSelectableSuggestions
   
+  @State var scheme: W3WScheme?
+
   @State private var refresh = false
   
   

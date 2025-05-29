@@ -78,6 +78,11 @@ public class W3WSelectableSuggestions: W3WEventSubscriberProtocol {
   }
 
   
+  public func count() -> Int {
+    return suggestions.count
+  }
+
+
   public func make(selectable: Bool) {
     for suggestion in suggestions {
       suggestion.selected.send(selectable ? false : nil)
