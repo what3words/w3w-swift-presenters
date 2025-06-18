@@ -17,26 +17,26 @@ public class W3WImagePickerViewModel: NSObject, UIImagePickerControllerDelegate,
   
   public var output = W3WEvent<W3WImagePickerOutputEvent>()
  
-  weak var picker: UIImagePickerController?
+  //weak var picker: UIImagePickerController?
 
   
-  public init(picker: UIImagePickerController) {
-    super.init()
-    picker.delegate = self
-  }
+  //public init(picker: UIImagePickerController) {
+  //  super.init()
+  //  picker.delegate = self
+  //}
   
   
-  public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    guard let image = info[.originalImage] as? UIImage else { return }
-    if let cgImage = image.cgImage {
-      output.send(.image(cgImage))
-      output.send(.dismiss)
-    }
-  }
+  //public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+  //  guard let image = info[.originalImage] as? UIImage else { return }
+  //  if let cgImage = image.cgImage {
+  //    output.send(.image(cgImage))
+  //    output.send(.dismiss)
+  //  }
+  //}
 
 
-  public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-    output.send(.dismiss)
-  }
+  //public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+  //  output.send(.dismiss)
+  //}
   
 }
