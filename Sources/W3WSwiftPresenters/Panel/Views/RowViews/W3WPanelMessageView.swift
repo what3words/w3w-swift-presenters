@@ -27,12 +27,12 @@ struct W3WPanelMessageView<ViewModel: W3WPanelViewModelProtocol>: View {
   var body: some View {
     HStack {
       W3WTextView(liveText, separator: false)
-          .foregroundColor(scheme?.colors?.secondary?.suColor)
-          .background(scheme?.colors?.background?.suColor)
+        .foregroundColor(scheme?.colors?.secondary?.suColor)
+        .background(scheme?.colors?.background?.suColor)
       Spacer()
     }
     .frame(maxWidth: .infinity, alignment: .leading)
-    .background(scheme?.colors?.secondaryBackground?.suColor)
+    //.background(scheme?.colors?.secondaryBackground?.suColor)
     .listRowBackground(scheme?.colors?.secondaryBackground?.suColor)
     .animation(.easeInOut(duration: 0.1))
     .onAppear {

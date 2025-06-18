@@ -32,11 +32,12 @@ public struct W3WSuBottomSheet<Content: View>: View {
   
   public var body: some View {
     VStack {
-      Image(systemName: "minus")
-        .padding(W3WPadding.light.value)
-        .frame(maxWidth: .infinity)
-        .background(W3WColor.background.current.suColor)
-        .cornerRadius(scheme?.styles?.cornerRadius?.value ?? W3WCornerRadius.regular.value, corners: [.topLeft, .topRight])
+      Spacer()
+        .frame(height: 10.0)
+      Rectangle()
+        .fill(scheme?.colors?.separator?.current.suColor ?? .gray)
+        .cornerRadius(4.0)
+        .frame(width: 36.0, height: 5.0)
       content
         .frame(height: height)
     }

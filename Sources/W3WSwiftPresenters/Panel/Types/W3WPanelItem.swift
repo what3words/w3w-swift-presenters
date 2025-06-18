@@ -37,6 +37,9 @@ public enum W3WPanelItem: Equatable, CustomStringConvertible {
       case (.message(let lhsString), .message(let rhsString)):
         return lhsString.value.asString() == rhsString.value.asString()
 
+      case (.heading(let lhsString), .heading(let rhsString)):
+        return lhsString.value.asString() == rhsString.value.asString()
+
       // this isn't perfect, needs a more rigourous compare.  It only compares the id of the first button
       case (.buttons(let lhsButtons, text: let lhsText), .buttons(let rhsButtons, text: let rhsText)):
         return (lhsButtons.first?.id == rhsButtons.first?.id) //&& (lhsText.value.asString() == rhsText.value.asString())
