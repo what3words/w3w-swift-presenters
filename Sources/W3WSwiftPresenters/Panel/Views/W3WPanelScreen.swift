@@ -52,7 +52,7 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
   let s3 = W3WBaseSuggestion(words: "zz.zz.zz", country: W3WBaseCountry(code: "ZZ"), nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
   let s4 = W3WBaseSuggestion(words: "reallyreally.longverylong.threewordaddress", nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
 
-  var items = W3WPanelViewModel()
+  var items = W3WPanelViewModel(scheme: W3WLive<W3WScheme?>(.w3w), language: W3WLive<W3WLanguage?>(W3WBaseLanguage(locale: "en")))
 
   W3WPanelScreen(viewModel: items, scheme: .w3w)
 }
