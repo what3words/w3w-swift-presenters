@@ -26,25 +26,22 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
   @ObservedObject var viewModel: ViewModel
 
   var body: some View {
-    //ScrollView(.horizontal, showsIndicators: false) {
-      HStack {
-        if liveText.asString() != "" {
-          W3WTextView(liveText)
-          Spacer()
-        }
-        
+    HStack {
+      if liveText.asString() != "" {
+        W3WTextView(liveText)
+        Spacer()
+      }
 
-        ForEach(buttons) { button in
-          if let title = button.title {
-            Button(action: { button.onTap() }, label: { Text(button.title ?? "") })
-              .padding(EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0))
-              .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
-              .background(scheme?.colors?.secondaryBackground?.current.suColor)
-              .clipShape(Capsule())
-          }
+      ForEach(buttons) { button in
+        if let title = button.title {
+          Button(action: { button.onTap() }, label: { Text(title) })
+            .padding(EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0))
+            .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
+            .background(scheme?.colors?.secondaryBackground?.current.suColor)
+            .clipShape(Capsule())
         }
       }
-    //}
+    }
     .padding()
     .background(scheme?.colors?.background?.current.suColor)
     
@@ -74,7 +71,7 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
 //      W3WButtonData(icon: .badgeFill, title: "title", onTap: { })
     ],
     text: W3WLive<W3WString>(W3WString("1 selected")),
-    viewModel: W3WPanelViewModel()
+    viewModel: W3WPanelViewModel(scheme: W3WLive<W3WScheme?>(.w3w), language: W3WLive<W3WLanguage?>(W3WBaseLanguage(locale: "en")))
   )
 }
 
