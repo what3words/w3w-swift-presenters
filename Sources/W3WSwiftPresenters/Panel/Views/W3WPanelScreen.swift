@@ -43,6 +43,7 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
       }
     }
     .background(scheme?.colors?.background?.current.suColor)
+    .layoutDirectionFromAppearance()
   }
 }
 
