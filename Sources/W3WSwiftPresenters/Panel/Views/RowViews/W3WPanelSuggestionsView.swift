@@ -36,6 +36,8 @@ struct W3WPanelSuggestionsView: View {
           W3WPanelSuggestionView(suggestion: selectableSuggestion, scheme: .standard) {
             if let s = selectableSuggestion.selected.value {
               selectableSuggestion.selected.send(!s)
+            } else {
+              suggestions.singleSelection(selectableSuggestion.suggestion)
             }
           }
         }
