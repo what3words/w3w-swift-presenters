@@ -17,6 +17,9 @@ public class W3WSelectableSuggestions: W3WEventSubscriberProtocol {
   //var update: () -> () = { }
   public var update = W3WEvent<Bool>()
   
+  /// called when the selection mode is off, and the user taps on a single suggestion
+  public var singleSelection: (W3WSuggestion) -> () = { _ in }
+  
   public var selectedSuggestions: [W3WSuggestion] {
     get {
       return suggestions.filter({ i in i.selected.value ?? false }).map { i in return i.suggestion }
@@ -48,7 +51,10 @@ public class W3WSelectableSuggestions: W3WEventSubscriberProtocol {
       }
     }
     //update()
-    update.send(true)
+    
+    W3WThread.runOnMain { [weak self] in
+      self?.update.send(true)
+    }
   }
 
   
@@ -57,7 +63,10 @@ public class W3WSelectableSuggestions: W3WEventSubscriberProtocol {
       add(suggestion: suggestion, selected: selected)
     }
     //update()
-    update.send(true)
+    
+    W3WThread.runOnMain { [weak self] in
+      self?.update.send(true)
+    }
   }
   
   
