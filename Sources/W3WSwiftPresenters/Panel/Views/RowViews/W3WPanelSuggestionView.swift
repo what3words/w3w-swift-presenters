@@ -34,12 +34,15 @@ struct W3WPanelSuggestionView: View {
       }
       
       VStack(alignment: .leading) {
-        
-        W3WTextView((suggestion.suggestion.words ?? "----.----.----").w3w.style(font: scheme?.styles?.font?.body).withSlashes())
-          .lineLimit(1)
-          .allowsTightening(true)
-          .minimumScaleFactor(0.5)
-
+        W3WTextView((suggestion.suggestion.words ?? "----.----.----")
+          .w3w
+          .style(font: scheme?.styles?.font?.body)
+          .withSlashes(language: suggestion.suggestion.language)
+        )
+        .lineLimit(1)
+        .allowsTightening(true)
+        .minimumScaleFactor(0.5)
+          
         HStack {
           if suggestion.suggestion.country?.code == "ZZ" {
             W3WTextView((suggestion.suggestion.nearestPlace ?? "middle of the ocean 🐟").w3w.style(color: scheme?.colors?.secondary, font: scheme?.styles?.font?.footnote).withSlashes(color: .clear, font: scheme?.styles?.font?.body))
@@ -62,6 +65,7 @@ struct W3WPanelSuggestionView: View {
       
     }
     .contentShape(Rectangle())
+    .layoutDirection(for: suggestion.suggestion.language)
     .onTapGesture {
       onTap()
     }
@@ -80,8 +84,6 @@ struct W3WPanelSuggestionView: View {
     Divider()
   }
 }
-
-
 
 #Preview {
   let s1 = W3WBaseSuggestion(words: "xxx.xxx.xxx", nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
