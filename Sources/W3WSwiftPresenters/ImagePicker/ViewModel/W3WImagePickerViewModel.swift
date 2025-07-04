@@ -11,7 +11,9 @@ import MobileCoreServices
 import UniformTypeIdentifiers
 
 
-public class W3WImagePickerViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate, @preconcurrency W3WImagePickerViewModelProtocol {
+public class W3WImagePickerViewModel: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate, @preconcurrency W3WImagePickerViewModelProtocol, @preconcurrency W3WEventSubscriberProtocol {
+
+  public var subscriptions = W3WEventsSubscriptions()
   
   public var input = W3WEvent<W3WImagePickerInputEvent>()
   

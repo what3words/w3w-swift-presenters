@@ -39,7 +39,6 @@ public class W3WImagePickerViewController: UIImagePickerController, UIImagePicke
     guard let image = info[.originalImage] as? UIImage else { return }
     if let cgImage = image.cgImage {
       viewModel?.output.send(.image(cgImage))
-      viewModel?.output.send(.dismiss)
     }
   }
 
