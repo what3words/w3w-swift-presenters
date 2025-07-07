@@ -21,12 +21,17 @@ struct W3WPanelHeadingView<ViewModel: W3WPanelViewModelProtocol>: View {
   var body: some View {
     HStack {
       Spacer()
-      W3WTextView(title.style(color: scheme?.colors?.header?.foreground, font: scheme?.styles?.font?.largeTitle), separator: false)
-        //.font(scheme?.styles?.font?.caption1.suFont.bold())
-        .frame(alignment: .center)
-        //.foregroundColor(scheme?.colors?.header?.foreground?.current.suColor)
-        .background(scheme?.colors?.background?.suColor)
-        .padding(W3WPadding.medium.value)
+      W3WTextView(
+        title.style(
+          color: scheme?.colors?.header?.foreground,
+          font: scheme?.styles?.fonts?.headline
+        ),
+        separator: false
+      )
+      .frame(alignment: .center)
+      //.foregroundColor(scheme?.colors?.header?.foreground?.current.suColor)
+      .background(scheme?.colors?.background?.suColor)
+      .padding(W3WPadding.medium.value)
       Spacer()
     }
     .frame(maxWidth: .infinity, alignment: .leading)
