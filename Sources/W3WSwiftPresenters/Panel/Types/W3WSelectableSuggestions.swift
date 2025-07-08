@@ -14,7 +14,6 @@ public class W3WSelectableSuggestions: W3WEventSubscriberProtocol {
   
   var suggestions = [W3WSelectableSuggestion]()
 
-  //var update: () -> () = { }
   public var update = W3WEvent<Bool>()
   
   /// called when the selection mode is off, and the user taps on a single suggestion
@@ -70,16 +69,11 @@ public class W3WSelectableSuggestions: W3WEventSubscriberProtocol {
   }
   
   
-  public func selectAll() {
+  public func setAll(selected: Bool) {
     for suggestion in suggestions {
-      suggestion.selected.send(true)
+      suggestion.selected.send(selected)
     }
   }
-  
-  
-//  public func areAnySelected() -> Bool {
-//    return suggestions.contains(where: { s in s.selected.value ?? false })
-//  }
   
   
   public func selectedCount() -> Int {

@@ -37,7 +37,7 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
           Button(action: { button.onTap() }, label: { Text(title) })
             .padding(EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0))
             .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
-            .background(scheme?.colors?.secondaryBackground?.current.suColor)
+            .background((button.highlight == .primary) ? scheme?.colors?.secondaryBackground?.current.suColor : scheme?.colors?.background?.current.suColor)
             .clipShape(Capsule())
         }
       }
@@ -46,12 +46,10 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
     .background(scheme?.colors?.background?.current.suColor)
     
     .onAppear { // Subscribe to the text changes
-      //if let t = text {
-        cancellable = text
-          .sink { content in
-            liveText = text.value
-          }
-      //}
+      cancellable = text
+        .sink { content in
+          liveText = text.value
+        }
     }
     .onDisappear {
       // Cancel the subscription
@@ -63,16 +61,24 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
 
 
 #Preview {
+  let scheme = W3WLive<W3WScheme?>(
+    W3WScheme(colors: W3WColors(
+      foreground: .white,
+      background: .lightBlue,
+      secondaryBackground: .blue
+    ))
+  )
+
+  
   W3WPanelButtonsView(
     buttons: [
-      W3WButtonData(icon: .badge, title: "title", onTap: { }),
-      W3WButtonData(icon: .camera, title: "title", onTap: { }),
-//      W3WButtonData(icon: .gearshape, title: "title", onTap: { }),
-//      W3WButtonData(icon: .badgeFill, title: "title", onTap: { })
+      W3WButtonData(icon: .badge, title: "titleA", onTap: { }),
+      W3WButtonData(icon: .gearshape, title: "titleB", highlight: .secondary, onTap: { }),
+      W3WButtonData(icon: .camera, title: "titleC", onTap: { }),
+      //W3WButtonData(icon: .badgeFill, title: "titleD", onTap: { })
     ],
     text: W3WLive<W3WString>(W3WString("1 selected")),
-    viewModel: W3WPanelViewModel(scheme: W3WLive<W3WScheme?>(.w3w), language: W3WLive<W3WLanguage?>(W3WBaseLanguage(locale: "en")))
-  )
+    viewModel: W3WPanelViewModel(scheme: scheme, language: W3WLive<W3WLanguage?>(W3WBaseLanguage(locale: "en"))))
 }
 
 
