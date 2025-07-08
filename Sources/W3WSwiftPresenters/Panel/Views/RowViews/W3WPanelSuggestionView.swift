@@ -14,74 +14,96 @@ import W3WSwiftThemes
 struct W3WPanelSuggestionView: View {
   @State private var cancellable: AnyCancellable?
  
-  //let suggestion: W3WSuggestion
   let suggestion: W3WSelectableSuggestion
   
   let scheme: W3WScheme?
   
-  //@Binding var selected: Bool? //W3WLive<Bool>?
+  let onTap: () -> Void
 
-  var onTap: () -> ()
-  
   @State var selected: Bool?
 
 
   var body: some View {
-    HStack {
-      if let s = selected {
-        Image(uiImage: s ? W3WImage.checkmarkCircleFill.get() : W3WImage.circle.get())
-          .padding()
+    HStack(alignment: .firstTextBaseline, spacing: 0) {
+      if let selected {
+        Image(uiImage: selected
+              ? W3WImage.checkmarkCircleFill.get()
+              : W3WImage.circle.get())
+        .padding(.horizontal, W3WPadding.medium.value)
+      } else {
+        Spacer()
+          .frame(width: W3WPadding.bold.value)
       }
       
-      VStack(alignment: .leading) {
-        W3WTextView((suggestion.suggestion.words ?? "----.----.----")
-          .w3w
-          .style(font: scheme?.styles?.font?.body)
-          .withSlashes(language: suggestion.suggestion.language)
-        )
-        .lineLimit(1)
-        .allowsTightening(true)
-        .minimumScaleFactor(0.5)
-          
-        HStack {
-          if suggestion.suggestion.country?.code == "ZZ" {
-            W3WTextView((suggestion.suggestion.nearestPlace ?? "middle of the ocean 🐟").w3w.style(color: scheme?.colors?.secondary, font: scheme?.styles?.font?.footnote).withSlashes(color: .clear, font: scheme?.styles?.font?.body))
-              .lineLimit(1)
-              .allowsTightening(true)
-              .minimumScaleFactor(0.5)
-          } else {
-            W3WTextView((suggestion.suggestion.nearestPlace ?? "middle of nowhere").w3w.style(color: scheme?.colors?.secondary, font: scheme?.styles?.font?.footnote).withSlashes(color: .clear, font: scheme?.styles?.font?.body))
-              .lineLimit(1)
-              .allowsTightening(true)
-              .minimumScaleFactor(0.5)
+      W3WTextView("".w3w
+        .style(font: scheme?.styles?.font?.body)
+        .withSlashes()
+      )
+      
+      HStack(alignment: .firstTextBaseline, spacing: 0) {
+        VStack(alignment: .leading, spacing: W3WPadding.fine.value) {
+          W3WTextView((suggestion.suggestion.words ?? "----.----.----")
+            .w3w
+            .style(font: scheme?.styles?.font?.body)
+          )
+          .lineLimit(1)
+          .allowsTightening(true)
+          .minimumScaleFactor(0.5)
+            
+          HStack {
+            W3WTextView(nearestPlace
+              .w3w
+              .style(
+                color: scheme?.colors?.secondary,
+                font: scheme?.styles?.font?.footnote
+              )
+            )
+            .lineLimit(1)
+            .allowsTightening(true)
+            .minimumScaleFactor(0.5)
+            
+            Spacer()
+            
+            W3WTextView(
+              suggestion.suggestion.distanceToFocus?.description
+                .w3w
+                .style(
+                  color: scheme?.colors?.secondary,
+                  font: scheme?.styles?.font?.footnote
+                ) ?? "".w3w)
+              .padding(.trailing)
           }
-          Spacer()
-
-          W3WTextView(suggestion.suggestion.distanceToFocus?.description.w3w.style(color: scheme?.colors?.secondary, font: scheme?.styles?.font?.footnote) ?? "".w3w)
-            .padding(.trailing)
         }
       }
-      .padding()
-      
+      .padding(.trailing, W3WPadding.bold.value)
+      .padding(.vertical, W3WPadding.medium.value)
+      .overlay(VStack {
+        Spacer()
+        Divider()
+      })
     }
     .contentShape(Rectangle())
     .layoutDirection(for: suggestion.suggestion.language)
-    .onTapGesture {
-      onTap()
-    }
-    
+    .onTapGesture(perform: onTap)
     .onAppear {
       cancellable = suggestion.selected
         .sink { value in
           selected = value
         }
     }
-    
     .onDisappear {
       cancellable?.cancel()
     }
-    
-    Divider()
+  }
+}
+
+// MARK: - Helpers
+private extension W3WPanelSuggestionView {
+  var nearestPlace: String {
+    let fallbackPlace = suggestion.suggestion.country?.code == "ZZ"
+        ? "middle of the ocean 🐟"
+        : "middle of nowhere"
+    return suggestion.suggestion.nearestPlace ?? fallbackPlace
   }
 }
 

@@ -22,17 +22,9 @@ struct W3WPanelSuggestionsView: View {
   
   
   var body: some View {
-//    suggestions.update = {
-//      W3WThread.queueOnMain {
-//        refresh.toggle()
-//      }
-//    }
-//
-//    return
     ScrollView {
-      if refresh == true || refresh == false { }
-      ForEach(suggestions.suggestions) { selectableSuggestion in
-        HStack {
+      VStack(spacing: 0) {
+        ForEach(suggestions.suggestions) { selectableSuggestion in
           W3WPanelSuggestionView(suggestion: selectableSuggestion, scheme: .standard) {
             if let s = selectableSuggestion.selected.value {
               selectableSuggestion.selected.send(!s)
