@@ -10,12 +10,18 @@ import W3WSwiftCore
 import W3WSwiftThemes
 
 public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
+  /// An enum used as a unique identifier for tracking the height of different view components
+  private enum Height {
+    case footer
+  }
   
   // main view model
   @ObservedObject var viewModel: ViewModel
 
   var scheme: W3WScheme?
 
+  /// The dynamically measured height of footer,
+  @State private var footerHeight: CGFloat = 0
   
   public init(viewModel: ViewModel, scheme: W3WScheme? = nil) {
     self.viewModel = viewModel
@@ -24,29 +30,31 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
   
   
   public var body: some View {
-    ZStack {
-      if viewModel.items.list.count > 0 {
-        ScrollView {
-          ForEach((0...viewModel.items.listNoFooters.count - 1), id: \.self) { index in
-            W3WPanelRowView(viewModel: viewModel, item: viewModel.items.listNoFooters[index], scheme: scheme)
-          }
-        }
+    ScrollView {
+      ForEach((0...viewModel.items.listNoFooters.count - 1), id: \.self) { index in
+        W3WPanelRowView(viewModel: viewModel, item: viewModel.items.listNoFooters[index], scheme: scheme)
       }
-      if let footer = viewModel.items.getFooter() {
-        VStack {
-          Spacer()
-          W3WPanelRowView(viewModel: viewModel, item: viewModel.items.list[0], scheme: scheme)
-            .overlay(
-              Rectangle()
-                .frame(height: W3WLineThickness.onePoint.value)
-                .foregroundColor(scheme?.colors?.separator?.current.suColor ?? Color.gray), alignment: .top)
-            .padding(.bottom)
-            .background(scheme?.colors?.background?.current.suColor)
-        }
-      }
+      // Bottom padding to prevent the items at the bottom from being obscured
+      Spacer()
+        .frame(height: footerHeight)
     }
+    .overlay(footer, alignment: .bottom)
     .background(scheme?.colors?.background?.current.suColor)
     .layoutDirectionFromAppearance()
+  }
+  
+  @ViewBuilder
+  private var footer: some View {
+    if let footer = viewModel.items.getFooter() {
+      VStack {
+        Divider()
+          .shadow(radius: 1, x: 0, y: 1)
+        W3WPanelRowView(viewModel: viewModel, item: footer, scheme: scheme)
+          .background(scheme?.colors?.background?.current.suColor)
+      }
+      .padding(.top, 16)
+      .onHeightChange($footerHeight, for: Height.footer)
+    }
   }
 }
 

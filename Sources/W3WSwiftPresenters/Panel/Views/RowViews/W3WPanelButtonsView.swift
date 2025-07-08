@@ -43,6 +43,7 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
       }
     }
     .padding(.bottom, W3WPadding.light.value)
+    .padding(.horizontal, W3WPadding.bold.value)
     .background(scheme?.colors?.background?.current.suColor)
     .onAppear { // Subscribe to the text changes
       cancellable = text

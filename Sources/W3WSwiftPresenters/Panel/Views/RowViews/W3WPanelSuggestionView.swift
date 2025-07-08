@@ -41,7 +41,7 @@ struct W3WPanelSuggestionView: View {
       )
       
       HStack(alignment: .firstTextBaseline, spacing: 0) {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: W3WPadding.fine.value) {
           W3WTextView((suggestion.suggestion.words ?? "----.----.----")
             .w3w
             .style(font: scheme?.styles?.font?.body)
