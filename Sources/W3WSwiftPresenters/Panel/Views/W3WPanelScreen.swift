@@ -36,7 +36,10 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
         VStack {
           Spacer()
           W3WPanelRowView(viewModel: viewModel, item: viewModel.items.list[0], scheme: scheme)
-            .overlay(Rectangle().frame(height: W3WLineThickness.onePoint.value).foregroundColor(scheme?.colors?.separator?.current.suColor ?? Color.gray), alignment: .top)
+            .overlay(
+              Rectangle()
+                .frame(height: W3WLineThickness.onePoint.value)
+                .foregroundColor(scheme?.colors?.separator?.current.suColor ?? Color.gray), alignment: .top)
             .padding(.bottom)
             .background(scheme?.colors?.background?.current.suColor)
         }

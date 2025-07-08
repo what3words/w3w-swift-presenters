@@ -34,7 +34,7 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
 
       ForEach(buttons) { button in
         if let title = button.title {
-          Button(action: { button.onTap() }, label: { Text(title) })
+          Button(title, action: button.onTap)
             .padding(EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0))
             .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
             .background((button.highlight == .primary) ? scheme?.colors?.secondaryBackground?.current.suColor : scheme?.colors?.background?.current.suColor)
@@ -42,9 +42,8 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
         }
       }
     }
-    .padding()
+    .padding(.bottom, W3WPadding.light.value)
     .background(scheme?.colors?.background?.current.suColor)
-    
     .onAppear { // Subscribe to the text changes
       cancellable = text
         .sink { content in
