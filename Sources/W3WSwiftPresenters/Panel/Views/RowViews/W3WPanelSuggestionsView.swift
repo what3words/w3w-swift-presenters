@@ -23,6 +23,7 @@ struct W3WPanelSuggestionsView: View {
   
   var body: some View {
     ScrollView {
+      if refresh == true || refresh == false { }
       VStack(spacing: 0) {
         ForEach(suggestions.suggestions) { selectableSuggestion in
           W3WPanelSuggestionView(suggestion: selectableSuggestion, scheme: .standard) {
