@@ -28,10 +28,8 @@ struct W3WPanelSuggestionView: View {
   var body: some View {
     HStack(alignment: .firstTextBaseline, spacing: 0) {
       if let selected {
-        Image(uiImage: selected
-              ? W3WImage.checkmarkCircleFill.get()
-              : W3WImage.circle.get())
-        .padding(.horizontal, W3WPadding.medium.value)
+        circleIcon(isSelected: selected)
+          .padding(.horizontal, W3WPadding.medium.value)
       } else {
         Spacer()
           .frame(width: W3WPadding.bold.value)
@@ -46,7 +44,13 @@ struct W3WPanelSuggestionView: View {
         VStack(alignment: .leading, spacing: W3WPadding.fine.value) {
           W3WTextView((suggestion.suggestion.words ?? "----.----.----")
             .w3w
-            .style(font: scheme?.styles?.font?.body)
+            .style(
+              color: W3WColor(
+                light: W3WCoreColor(hex: 0x0A3049),
+                dark: W3WCoreColor(hex: 0xF0F0F3)
+              ),
+              font: scheme?.styles?.font?.body
+            )
           )
           .lineLimit(1)
           .allowsTightening(true)
@@ -56,7 +60,10 @@ struct W3WPanelSuggestionView: View {
             W3WTextView(nearestPlace
               .w3w
               .style(
-                color: scheme?.colors?.secondary,
+                color: W3WColor(
+                  light: W3WCoreColor(hex: 0x73777C),
+                  dark: W3WCoreColor(hex: 0xFCFCFF)
+                ),
                 font: scheme?.styles?.font?.footnote
               )
             )
@@ -108,6 +115,28 @@ private extension W3WPanelSuggestionView {
         ? "middle of the ocean 🐟"
         : "middle of nowhere"
     return suggestion.suggestion.nearestPlace ?? fallbackPlace
+  }
+  
+  func circleIcon(isSelected: Bool) -> some View {
+    if isSelected {
+      return Image(uiImage: W3WImage.checkmarkCircleFill.get())
+        .renderingMode(.template)
+        .foregroundColor({
+          switch W3WColor.theme {
+          case .light: W3WCoreColor(hex: 0x187DB9).suColor
+          case .dark: W3WCoreColor(hex: 0x8DD4EB).suColor
+          }
+        }())
+    } else {
+      return Image(uiImage: W3WImage.circle.get())
+        .renderingMode(.template)
+        .foregroundColor({
+          switch W3WColor.theme {
+          case .light: W3WCoreColor(hex: 0xBFBFBF).suColor
+          case .dark: W3WCoreColor(hex: 0x404040).suColor
+          }
+        }())
+    }
   }
 }
 
