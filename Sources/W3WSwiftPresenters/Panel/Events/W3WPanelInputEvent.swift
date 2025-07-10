@@ -10,5 +10,6 @@ public enum W3WPanelInputEvent {
   
   case add(item: W3WPanelItem)
   case remove(item: W3WPanelItem)
+  case header(item: W3WPanelItem?)
   case footer(item: W3WPanelItem?)
 }

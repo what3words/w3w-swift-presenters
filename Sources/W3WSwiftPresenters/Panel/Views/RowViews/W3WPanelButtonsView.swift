@@ -28,7 +28,14 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
   var body: some View {
     HStack {
       if liveText.asString() != "" {
-        W3WTextView(liveText)
+        W3WTextView(liveText
+          .style(
+            color: W3WColor(
+              light: W3WCoreColor.black,
+              dark: W3WCoreColor.white
+            )
+          )
+        )
         Spacer()
       }
 

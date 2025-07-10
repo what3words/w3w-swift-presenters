@@ -60,16 +60,19 @@ public class W3WPanelViewModel: W3WPanelViewModelProtocol, W3WEventSubscriberPro
   /// handle in input event
   func handle(event: W3WPanelInputEvent) {
     switch event {
-      case .add(item: let item):
-        items.prepend(item: item)
-
-      case .remove(item: let item):
-        items.remove(item: item)
-        
-      case .footer(item: let item):
-        items.set(footer: item)
+    case .add(item: let item):
+      items.prepend(item: item)
+      
+    case .remove(item: let item):
+      items.remove(item: item)
+      
+    case .header(item: let item):
+      items.set(header: item)
+      
+    case .footer(item: let item):
+      items.set(footer: item)
     }
-
+    
     objectWillChange.send()
   }
   
