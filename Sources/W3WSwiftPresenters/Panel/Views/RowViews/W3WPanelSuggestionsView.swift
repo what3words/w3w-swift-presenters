@@ -26,7 +26,10 @@ struct W3WPanelSuggestionsView: View {
       if refresh == true || refresh == false { }
       VStack(spacing: 0) {
         ForEach(suggestions.suggestions) { selectableSuggestion in
-          W3WPanelSuggestionView(suggestion: selectableSuggestion, scheme: .standard) {
+          W3WPanelSuggestionView(
+            suggestion: selectableSuggestion,
+            showDivider: selectableSuggestion.id != suggestions.suggestions.last?.id,
+            scheme: .standard) {
             if let s = selectableSuggestion.selected.value {
               selectableSuggestion.selected.send(!s)
             } else {

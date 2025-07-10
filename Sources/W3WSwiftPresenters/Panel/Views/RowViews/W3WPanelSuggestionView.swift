@@ -16,6 +16,8 @@ struct W3WPanelSuggestionView: View {
  
   let suggestion: W3WSelectableSuggestion
   
+  var showDivider: Bool = true
+  
   let scheme: W3WScheme?
   
   let onTap: () -> Void
@@ -78,8 +80,10 @@ struct W3WPanelSuggestionView: View {
       .padding(.trailing, W3WPadding.bold.value)
       .padding(.vertical, W3WPadding.medium.value)
       .overlay(VStack {
-        Spacer()
-        Divider()
+        if showDivider {
+          Spacer()
+          Divider()
+        }
       })
     }
     .contentShape(Rectangle())

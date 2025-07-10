@@ -50,9 +50,9 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
         Divider()
           .shadow(radius: 1, x: 0, y: 1)
         W3WPanelRowView(viewModel: viewModel, item: viewModel.items.list[0], scheme: scheme)
-          .background(scheme?.colors?.background?.current.suColor)
       }
       .padding(.top, 16)
+      .background(scheme?.colors?.background?.current.suColor)
       .onHeightChange($footerHeight, for: Height.footer)
     }
   }
