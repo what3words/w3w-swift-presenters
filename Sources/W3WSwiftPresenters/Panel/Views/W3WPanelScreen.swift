@@ -30,17 +30,28 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
   
   
   public var body: some View {
-    ScrollView {
-      ForEach((0...viewModel.items.listNoFooters.count - 1), id: \.self) { index in
-        W3WPanelRowView(viewModel: viewModel, item: viewModel.items.listNoFooters[index], scheme: scheme)
+    VStack(spacing: 0) {
+      header
+      ScrollView {
+        ForEach((0...viewModel.items.listNormal.count - 1), id: \.self) { index in
+          W3WPanelRowView(viewModel: viewModel, item: viewModel.items.listNormal[index], scheme: scheme)
+        }
       }
-      // Bottom padding to prevent the items at the bottom from being obscured
-      Spacer()
-        .frame(height: footerHeight)
+      footer
     }
-    .overlay(footer, alignment: .bottom)
     .background(scheme?.colors?.background?.current.suColor)
     .layoutDirectionFromAppearance()
+  }
+  
+  @ViewBuilder
+  private var header: some View {
+    if let header = viewModel.items.getHeader() {
+      W3WPanelRowView(
+        viewModel: viewModel,
+        item: header,
+        scheme: scheme
+      )
+    }
   }
   
   @ViewBuilder
@@ -53,7 +64,6 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
       }
       .padding(.top, 16)
       .background(scheme?.colors?.background?.current.suColor)
-      .onHeightChange($footerHeight, for: Height.footer)
     }
   }
 }
