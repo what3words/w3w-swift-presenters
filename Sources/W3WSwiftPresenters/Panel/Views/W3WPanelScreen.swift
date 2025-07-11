@@ -10,11 +10,6 @@ import W3WSwiftCore
 import W3WSwiftThemes
 
 public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
-  /// An enum used as a unique identifier for tracking the height of different view components
-  private enum Height {
-    case footer
-  }
-  
   // main view model
   @ObservedObject var viewModel: ViewModel
 
