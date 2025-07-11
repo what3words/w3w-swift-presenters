@@ -35,6 +35,14 @@ public class W3WImagePickerViewController: UIImagePickerController, UIImagePicke
   }
   
   
+  public override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+
+    if isBeingDismissed {
+      viewModel?.output.send(.dismiss)
+    }
+  }
+  
   public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     guard let image = info[.originalImage] as? UIImage else { return }
     if let cgImage = image.cgImage {
