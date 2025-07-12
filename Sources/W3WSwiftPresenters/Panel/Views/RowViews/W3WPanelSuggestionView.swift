@@ -45,10 +45,7 @@ struct W3WPanelSuggestionView: View {
           W3WTextView((suggestion.suggestion.words ?? "----.----.----")
             .w3w
             .style(
-              color: W3WColor(
-                light: W3WCoreColor(hex: 0x0A3049),
-                dark: W3WCoreColor(hex: 0xF0F0F3)
-              ),
+              color: W3WColor.w3wLabelsTertiary,
               font: scheme?.styles?.font?.body
             )
           )
@@ -60,10 +57,7 @@ struct W3WPanelSuggestionView: View {
             W3WTextView(nearestPlace
               .w3w
               .style(
-                color: W3WColor(
-                  light: W3WCoreColor(hex: 0x73777C),
-                  dark: W3WCoreColor(hex: 0xFCFCFF)
-                ),
+                color: W3WColor.w3wLabelsQuaternary,
                 font: scheme?.styles?.font?.footnote
               )
             )
@@ -121,21 +115,11 @@ private extension W3WPanelSuggestionView {
     if isSelected {
       return Image(uiImage: W3WImage.checkmarkCircleFill.get())
         .renderingMode(.template)
-        .foregroundColor({
-          switch W3WColor.theme {
-          case .light: W3WCoreColor(hex: 0x187DB9).suColor
-          case .dark: W3WCoreColor(hex: 0x8DD4EB).suColor
-          }
-        }())
+        .foregroundColor(W3WColor.w3wLabelsSecondary.suColor)
     } else {
       return Image(uiImage: W3WImage.circle.get())
         .renderingMode(.template)
-        .foregroundColor({
-          switch W3WColor.theme {
-          case .light: W3WCoreColor(hex: 0xBFBFBF).suColor
-          case .dark: W3WCoreColor(hex: 0x404040).suColor
-          }
-        }())
+        .foregroundColor(W3WColor(light: .core.grey60, dark: .core.grey30).suColor)
     }
   }
 }
