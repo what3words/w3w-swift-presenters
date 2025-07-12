@@ -25,7 +25,13 @@ public class W3WSelectableSuggestions: W3WEventSubscriberProtocol {
     }
   }
   
+  public var allSuggestions: [W3WSuggestion] {
+    get {
+      return suggestions.map { i in return i.suggestion }
+    }
+  }
   
+
   public init(suggestions: [W3WSelectableSuggestion] = [], update: W3WEvent<Bool> = W3WEvent<Bool>()) {
     self.suggestions = suggestions
     self.update = update
