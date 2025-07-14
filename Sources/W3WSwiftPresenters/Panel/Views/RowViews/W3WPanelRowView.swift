@@ -21,56 +21,27 @@ struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
   
   var body: some View {
     switch item {
-        
-      case .heading(let text):
-        W3WPanelHeadingView(title: text.value, scheme: scheme, viewModel: viewModel)
-        
-      case .message(let message):
-        W3WPanelMessageView(message: message, scheme: scheme, viewModel: viewModel)
-        
-      case .actionItem(icon: let icon, text: let text, let button):
-        W3WPanelActionItemView(icon: icon, text: text, button: button, scheme: scheme)
-        
-      case .buttons(let buttons, text: let text):
-        W3WPanelButtonsView(buttons: buttons, text: text, scheme: scheme, viewModel: viewModel)
-        
-      case .tappableRow(icon: let image, text: let text):
-        W3WPanelTappableRow(icon: image, text: text, scheme: scheme)
-        
-      case .suggestions(let suggestions):
-        W3WPanelSuggestionsView(suggestions: suggestions, scheme: scheme)
-        
-      //case .suggestion(let suggestion, let selected):
-      //  W3WPanelSuggestionView(suggestion: suggestion, scheme: theme?.basicScheme(), selected: selected?.value, onTap: { print(suggestion) })
-      //
-      //case .address(address: let address, let buttons):
-      //  W3WPanelMessageView(message: W3WLive<W3WString>(address), viewModel: viewModel)
-      //
-      //case .notification(let notification):
-      //  W3WPanelMessageView(message: notification.message?.asString() ?? "", viewModel: viewModel)
-      //
-      //case .route(time: let time, distance: let distance, eta: let eta, let buttons):
-      //  W3WPanelMessageView(message: time.value.seconds.description, viewModel: viewModel)
-      //
-      //case .routeFinished(let suggestion):
-      //  W3WPanelMessageView(message: suggestion.words ?? "", viewModel: viewModel)
-      //
-      //case .segmentedControl(let buttons):
-      //  W3WPanelMessageView(message: buttons.description, viewModel: viewModel)
-      //
-      //case .selectableSuggestion(let suggestion, let value):
-      //  W3WPanelMessageView(message: (suggestion.words ?? "") + (value.value ? "on" : "off"), viewModel: viewModel)
-      //
-      //case .title(let title):
-      //  W3WPanelMessageView(message: title.value.asString(), viewModel: viewModel)
-        
-      default:
-        Text("?")
-    }  }
+      
+    case .heading(let text):
+      W3WPanelHeadingView(title: text.value, scheme: scheme, viewModel: viewModel)
+      
+    case .message(let message):
+      W3WPanelMessageView(message: message, scheme: scheme, viewModel: viewModel)
+      
+    case .actionItem(icon: let icon, text: let text, let button):
+      W3WPanelActionItemView(icon: icon, text: text, button: button, scheme: scheme)
+      
+    case .buttons(let buttons, text: let text):
+      W3WPanelButtonsView(buttons: buttons, text: text, scheme: scheme, viewModel: viewModel)
+      
+    case .tappableRow(icon: let image, text: let text):
+      W3WPanelTappableRow(icon: image, text: text, scheme: scheme)
+      
+    case .suggestions(let suggestions):
+      W3WPanelSuggestionsView(suggestions: suggestions, scheme: scheme)
+      
+    default:
+      Text("?")
+    }
+  }
 }
-
-
-
-//#Preview {
-//    SwiftUIView()
-//}
