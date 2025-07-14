@@ -44,8 +44,10 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
           Button(title, action: button.onTap)
             .padding(EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0))
             .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
-            .background((button.highlight == .primary) ? scheme?.colors?.secondaryBackground?.current.suColor : scheme?.colors?.background?.current.suColor)
-            .clipShape(Capsule())
+            .background((button.highlight == .primary)
+                        ? scheme?.colors?.secondaryBackground?.current.suColor
+                        : W3WColor.w3wFillsSenary.suColor)
+            .clipShape(.rect(cornerRadius: 8))
         }
       }
     }
