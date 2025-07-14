@@ -34,8 +34,11 @@ struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
     case .button(let button):
       W3WPanelPrimaryActionView(button: button)
       
-    case .buttons(let buttons, text: let text):
-      W3WPanelButtonsView(buttons: buttons, text: text, scheme: scheme, viewModel: viewModel)
+    case .buttons(let buttons):
+      W3WPanelButtonsView(buttons: buttons, scheme: scheme)
+      
+    case .buttonsAndTitle(let buttons, text: let text):
+      W3WPanelButtonsAndTitleView(buttons: buttons, text: text, scheme: scheme)
       
     case .tappableRow(icon: let image, text: let text):
       W3WPanelTappableRow(icon: image, text: text, scheme: scheme)

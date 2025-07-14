@@ -16,7 +16,8 @@ public struct W3WNotification { }
 
 public enum W3WPanelItem: Equatable, CustomStringConvertible {
   case button(W3WButtonData)
-  case buttons([W3WButtonData], text: W3WLive<W3WString> = W3WLive<W3WString>("".w3w))
+  case buttons([W3WButtonData])
+  case buttonsAndTitle([W3WButtonData], text: W3WLive<W3WString> = W3WLive<W3WString>("".w3w))
   case tappableRow(icon: W3WImage, text: W3WLive<W3WString>)
   case address(address: String, [W3WButtonData])
   case message(W3WLive<W3WString>)
@@ -44,7 +45,10 @@ public enum W3WPanelItem: Equatable, CustomStringConvertible {
       return lhsButton.title == rhsButton.title
       
       // this isn't perfect, needs a more rigourous compare.  It only compares the id of the first button
-    case (.buttons(let lhsButtons, _), .buttons(let rhsButtons, _)):
+    case (.buttons(let lhsButtons), .buttons(let rhsButtons)):
+      return lhsButtons.first?.id == rhsButtons.first?.id
+      
+    case (.buttonsAndTitle(let lhsButtons, _), .buttonsAndTitle(let rhsButtons, _)):
       return (lhsButtons.first?.id == rhsButtons.first?.id) //&& (lhsText.value.asString() == rhsText.value.asString())
       
     default:
@@ -57,8 +61,13 @@ public enum W3WPanelItem: Equatable, CustomStringConvertible {
     switch self {
     case .button(let button):
       return "button: \(button.title ?? "no title")"
-    case .buttons(let buttons, _):
+      
+    case .buttons(let buttons):
       return "\(buttons.count) buttons"
+      
+    case let .buttonsAndTitle(buttons, title):
+      return "\(buttons.count) buttons & \(title.value.asString())"
+      
     case .tappableRow(_, text: let text):
       return "row: " + text.value.asString()
       
