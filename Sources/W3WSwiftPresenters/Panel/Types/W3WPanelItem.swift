@@ -15,7 +15,7 @@ import W3WSwiftThemes
 public struct W3WNotification { }
 
 public enum W3WPanelItem: Equatable, CustomStringConvertible {
-  
+  case button(W3WButtonData)
   case buttons([W3WButtonData], text: W3WLive<W3WString> = W3WLive<W3WString>("".w3w))
   case tappableRow(icon: W3WImage, text: W3WLive<W3WString>)
   case address(address: String, [W3WButtonData])
@@ -34,69 +34,66 @@ public enum W3WPanelItem: Equatable, CustomStringConvertible {
   
   public static func == (lhs: W3WPanelItem, rhs: W3WPanelItem) -> Bool {
     switch (lhs, rhs) {
-      case (.message(let lhsString), .message(let rhsString)):
-        return lhsString.value.asString() == rhsString.value.asString()
-
-      case (.heading(let lhsString), .heading(let rhsString)):
-        return lhsString.value.asString() == rhsString.value.asString()
-
+    case (.message(let lhsString), .message(let rhsString)):
+      return lhsString.value.asString() == rhsString.value.asString()
+      
+    case (.heading(let lhsString), .heading(let rhsString)):
+      return lhsString.value.asString() == rhsString.value.asString()
+      
+    case (.button(let lhsButton), .button(let rhsButton)):
+      return lhsButton.title == rhsButton.title
+      
       // this isn't perfect, needs a more rigourous compare.  It only compares the id of the first button
-      case (.buttons(let lhsButtons, text: let lhsText), .buttons(let rhsButtons, text: let rhsText)):
-        return (lhsButtons.first?.id == rhsButtons.first?.id) //&& (lhsText.value.asString() == rhsText.value.asString())
-        
-      default:
-        return false
+    case (.buttons(let lhsButtons, _), .buttons(let rhsButtons, _)):
+      return (lhsButtons.first?.id == rhsButtons.first?.id) //&& (lhsText.value.asString() == rhsText.value.asString())
+      
+    default:
+      return false
     }
   }
   
   
   public var description: String {
-    get {
-      switch self {
-          
-        case .buttons(let buttons, text: let text):
-          return "\(buttons.count) buttons"
-        case .tappableRow(icon: let icon, text: let text):
-          return "row: " + text.value.asString()
-          
-        case .address(address: let address, _):
-          return "address: " + address.description
-
-        case .message(let message):
-          return message.value.description
-          
-        case .suggestion(let suggestion, _):
-          return suggestion.description
-          
-        case .suggestions(let suggestions):
-          return suggestions.suggestions.description
-          
-        //case .selectableSuggestion(let suggestion, let on):
-        //  return suggestion.description + " \(on.value ? "on" : "off")"
-          
-        case .segmentedControl(let control):
-          return "Control with \(control.count) values"
-
-        case .route(time: let time, distance: let distance, eta: let eta, _):
-          return "route: \(time.value.seconds) seconds, \(distance.value.description)"
-          
-        case .routeFinished(_):
-          return "route finished"
-          
-        case .title(let text):
-          return text.value.asString()
-          
-        case .heading(let text):
-          return text.value.asString()
-
-        case .notification(let notification):
-          return "notification"
-          
-        case .actionItem(icon: let icon, text: let text, _):
-          return "action:" + text.value.asString()
-      }
+    switch self {
+    case .button(let button):
+      return "button: \(button.title ?? "no title")"
+    case .buttons(let buttons, _):
+      return "\(buttons.count) buttons"
+    case .tappableRow(_, text: let text):
+      return "row: " + text.value.asString()
+      
+    case .address(address: let address, _):
+      return "address: " + address.description
+      
+    case .message(let message):
+      return message.value.description
+      
+    case .suggestion(let suggestion, _):
+      return suggestion.description
+      
+    case .suggestions(let suggestions):
+      return suggestions.suggestions.description
+      
+    case .segmentedControl(let control):
+      return "Control with \(control.count) values"
+      
+    case .route(time: let time, distance: let distance, _, _):
+      return "route: \(time.value.seconds) seconds, \(distance.value.description)"
+      
+    case .routeFinished(_):
+      return "route finished"
+      
+    case .title(let text):
+      return text.value.asString()
+      
+    case .heading(let text):
+      return text.value.asString()
+      
+    case .notification:
+      return "notification"
+      
+    case .actionItem(_, text: let text, _):
+      return "action:" + text.value.asString()
     }
   }
-
-
 }

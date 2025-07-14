@@ -68,7 +68,6 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
 }
 
 
-
 #Preview {
   let scheme = W3WLive<W3WScheme?>(
     W3WScheme(colors: W3WColors(
@@ -84,7 +83,6 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
       W3WButtonData(icon: .badge, title: "titleA", onTap: { }),
       W3WButtonData(icon: .gearshape, title: "titleB", highlight: .secondary, onTap: { }),
       W3WButtonData(icon: .camera, title: "titleC", onTap: { }),
-      //W3WButtonData(icon: .badgeFill, title: "titleD", onTap: { })
     ],
     text: W3WLive<W3WString>(W3WString("1 selected")),
     viewModel: W3WPanelViewModel(scheme: scheme, language: W3WLive<W3WLanguage?>(W3WBaseLanguage(locale: "en"))))

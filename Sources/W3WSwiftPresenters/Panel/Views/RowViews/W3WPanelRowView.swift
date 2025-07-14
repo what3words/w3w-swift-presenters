@@ -31,6 +31,9 @@ struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
     case .actionItem(icon: let icon, text: let text, let button):
       W3WPanelActionItemView(icon: icon, text: text, button: button, scheme: scheme)
       
+    case .button(let button):
+      W3WPanelPrimaryActionView(button: button)
+      
     case .buttons(let buttons, text: let text):
       W3WPanelButtonsView(buttons: buttons, text: text, scheme: scheme, viewModel: viewModel)
       
