@@ -25,7 +25,7 @@ struct W3WPanelButtonsAndTitleView: View {
   private let minButtonWidth: CGFloat = 93
   
   var body: some View {
-    HStack {
+    HStack(spacing: 0) {
       if liveText.asString() != "" {
         W3WTextView(liveText
           .style(
@@ -37,23 +37,25 @@ struct W3WPanelButtonsAndTitleView: View {
         )
         Spacer()
       }
-
-      ForEach(buttons) { button in
-        if let title = button.title {
-          Button(action: button.onTap) {
-            HStack(spacing: 2) {
-              if let icon = button.icon {
-                Image(uiImage: icon.get())
-                  .renderingMode(.template)
+      HStack {
+        ForEach(buttons) { button in
+          if let title = button.title {
+            Button(action: button.onTap) {
+              HStack(spacing: 2) {
+                if let icon = button.icon {
+                  Image(uiImage: icon.get())
+                    .renderingMode(.template)
+                }
+                Text(title)
+                  .lineLimit(1)
               }
-              Text(title)
+              .padding(EdgeInsets(top: 10.0, leading: 8.0, bottom: 10.0, trailing: 14.0))
+              .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
+              .background((button.highlight == .primary)
+                          ? scheme?.colors?.secondaryBackground?.current.suColor
+                          : W3WColor.w3wFillsSenary.suColor)
+              .clipShape(.capsule)
             }
-            .padding(EdgeInsets(top: 10.0, leading: 8.0, bottom: 10.0, trailing: 14.0))
-            .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
-            .background((button.highlight == .primary)
-                        ? scheme?.colors?.secondaryBackground?.current.suColor
-                        : W3WColor.w3wFillsSenary.suColor)
-            .clipShape(.capsule)
           }
         }
       }
