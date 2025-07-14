@@ -17,13 +17,15 @@ struct W3WPanelPrimaryActionView: View {
   private let buttonHeight: CGFloat = 50
   
   var body: some View {
-    Button(button.title ?? "", action: button.onTap)
-      .frame(height: buttonHeight)
-      .frame(maxWidth: .infinity)
-      .foregroundColor(W3WColor.w3wLabelsPrimary.suColor)
-      .background(W3WColor.w3wFillsSecondary.suColor)
-      .clipShape(.rect(cornerRadius: 8))
-      .padding(.bottom, W3WPadding.light.value)
-      .padding(.horizontal, W3WPadding.bold.value)
+    Button(action: button.onTap) {
+      Text(button.title ?? "")
+        .frame(height: buttonHeight)
+        .frame(maxWidth: .infinity)
+        .foregroundColor(W3WColor.w3wLabelsPrimary.suColor)
+        .background(W3WColor.w3wFillsSecondary.suColor)
+        .clipShape(.rect(cornerRadius: 8))
+    }
+    .padding(.bottom, W3WPadding.light.value)
+    .padding(.horizontal, W3WPadding.bold.value)
   }
 }

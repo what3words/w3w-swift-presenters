@@ -87,34 +87,3 @@ struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
     text: W3WLive<W3WString>(W3WString("1 selected")),
     viewModel: W3WPanelViewModel(scheme: scheme, language: W3WLive<W3WLanguage?>(W3WBaseLanguage(locale: "en"))))
 }
-
-
-
-//ScrollView(.horizontal, showsIndicators: false) {
-//  HStack { // Add some spacing between buttons
-//    if let text = text?.value {
-//      W3WTextView(text)
-//    }
-//    ForEach(buttons) { button in
-//      if let title = button.title {
-//        Button(action: { button.onTap() }, label: {
-//          HStack {
-//            if let icon = button.icon {
-//              Image(uiImage: icon.get())
-//            }
-//            if let t = button.title {
-//              Text(t)
-//            }
-//          }.padding(EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0))
-//        }
-//        )
-//        .foregroundColor(W3WColor.darkBlue.suColor)
-//        .background(W3WColor.lightBlue.suColor)  //(viewModel.scheme?.colors?.secondaryBackground?.current.suColor)
-//        .clipShape(Capsule())
-//      }
-//    }
-//  }
-//  .background(Color.gray)
-//  .frame(maxWidth: .infinity) // Allow the HStack to expand to the full width of the ScrollView
-//  .padding()
-//}
