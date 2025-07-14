@@ -13,27 +13,14 @@ import W3WSwiftDesign
 
 struct W3WPanelButtonsView: View {
 
-  var buttons: [W3WButtonData]
+  @State var buttons: [W3WButtonData]
 
   var scheme: W3WScheme?
 
-  private let minButtonWidth: CGFloat = 93
-  
   var body: some View {
     HStack {
       ForEach(buttons) { button in
-        if let title = button.title {
-          Button(action: button.onTap) {
-            Text(title)
-              .padding(EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0))
-              .frame(minWidth: minButtonWidth)
-              .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
-              .background((button.highlight == .primary)
-                          ? scheme?.colors?.secondaryBackground?.current.suColor
-                          : W3WColor.w3wFillsSenary.suColor)
-              .clipShape(.rect(cornerRadius: 8))
-          }
-        }
+        _Button(button: button, scheme: scheme)
       }
     }
     .padding(.bottom, W3WPadding.light.value)
@@ -42,6 +29,30 @@ struct W3WPanelButtonsView: View {
   }
 }
 
+private extension W3WPanelButtonsView {
+  struct _Button: View {
+    @ObservedObject var button: W3WButtonData
+    
+    var scheme: W3WScheme?
+    
+    private let minButtonWidth: CGFloat = 93
+    
+    var body: some View {
+      if let title = button.title {
+        Button(action: button.onTap) {
+          Text(title)
+            .padding(EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0))
+            .frame(minWidth: minButtonWidth)
+            .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
+            .background((button.highlight == .primary)
+                        ? scheme?.colors?.secondaryBackground?.current.suColor
+                        : W3WColor.w3wFillsSenary.suColor)
+            .clipShape(.rect(cornerRadius: 8))
+        }
+      }
+    }
+  }
+}
 
 #Preview {
   let scheme = W3WLive<W3WScheme?>(

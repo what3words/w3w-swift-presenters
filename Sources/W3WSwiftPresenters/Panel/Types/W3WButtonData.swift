@@ -9,12 +9,12 @@ import Foundation
 import W3WSwiftThemes
 
 
-public class W3WButtonData: Identifiable {
+public class W3WButtonData: Identifiable, ObservableObject {
   public var id = UUID()
   
   public var icon: W3WImage?
   public var title: String?
-  public var highlight: W3WOrdinal
+  @Published public var highlight: W3WOrdinal
   public var onTap: () -> ()
   
   public init(icon: W3WImage? = nil, title: String? = nil, highlight: W3WOrdinal = .primary, onTap: @escaping () -> Void) {
