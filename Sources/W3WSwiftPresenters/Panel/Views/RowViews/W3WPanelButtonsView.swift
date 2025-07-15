@@ -35,21 +35,29 @@ private extension W3WPanelButtonsView {
     
     var scheme: W3WScheme?
     
+    // Consider using a preference key to track the biggest width
     private let minButtonWidth: CGFloat = 93
     
     var body: some View {
       if let title = button.title {
         Button(action: button.onTap) {
           Text(title)
-            .padding(EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0))
+            .padding(.vertical, W3WPadding.extraMedium.value)
+            .padding(.horizontal, W3WPadding.bold.value)
             .frame(minWidth: minButtonWidth)
             .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
-            .background((button.highlight == .primary)
-                        ? scheme?.colors?.secondaryBackground?.current.suColor
-                        : W3WColor.w3wFillsSenary.suColor)
-            .clipShape(.rect(cornerRadius: 8))
+            .background(
+              button.highlight == .primary
+              ? scheme?.colors?.secondaryBackground?.current.suColor
+              : W3WColor.w3wFillsSenary.suColor
+            )
+            .clipShape(.rect(cornerRadius: buttonCornerRadius))
         }
       }
+    }
+    
+    private var buttonCornerRadius: CGFloat {
+      scheme?.styles?.cornerRadius?.value ?? 8
     }
   }
 }

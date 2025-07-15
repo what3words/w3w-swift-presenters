@@ -22,10 +22,8 @@ struct W3WPanelButtonsAndTitleView: View {
 
   @State var liveText = W3WString()
 
-  private let minButtonWidth: CGFloat = 93
-  
   var body: some View {
-    HStack(spacing: 0) {
+    HStack(spacing: W3WPadding.none.value) {
       if liveText.asString() != "" {
         W3WTextView(liveText
           .style(
@@ -41,7 +39,7 @@ struct W3WPanelButtonsAndTitleView: View {
         ForEach(buttons) { button in
           if let title = button.title {
             Button(action: button.onTap) {
-              HStack(spacing: 2) {
+              HStack(spacing: W3WPadding.fine.value) {
                 if let icon = button.icon {
                   Image(uiImage: icon.get())
                     .renderingMode(.template)
@@ -49,7 +47,9 @@ struct W3WPanelButtonsAndTitleView: View {
                 Text(title)
                   .lineLimit(1)
               }
-              .padding(EdgeInsets(top: 10.0, leading: 8.0, bottom: 10.0, trailing: 14.0))
+              .padding(.vertical, W3WPadding.extraMedium.value)
+              .padding(.leading, W3WPadding.light.value)
+              .padding(.trailing, W3WPadding.medium.value)
               .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
               .background((button.highlight == .primary)
                           ? scheme?.colors?.secondaryBackground?.current.suColor

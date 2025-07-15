@@ -14,12 +14,10 @@ import W3WSwiftDesign
 struct W3WPanelPrimaryActionView: View {
   let button: W3WButtonData
   
-  private let buttonHeight: CGFloat = 50
-  
   var body: some View {
     Button(action: button.onTap) {
       Text(button.title ?? "")
-        .frame(height: buttonHeight)
+        .padding(.vertical, W3WPadding.bold.value)
         .frame(maxWidth: .infinity)
         .foregroundColor(W3WColor.w3wLabelsPrimary.suColor)
         .background(W3WColor.w3wFillsSecondary.suColor)
