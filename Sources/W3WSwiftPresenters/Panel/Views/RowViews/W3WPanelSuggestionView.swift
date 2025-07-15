@@ -105,10 +105,8 @@ struct W3WPanelSuggestionView: View {
 // MARK: - Helpers
 private extension W3WPanelSuggestionView {
   var nearestPlace: String {
-    let fallbackPlace = suggestion.suggestion.country?.code == "ZZ"
-        ? "middle of the ocean 🐟"
-        : "middle of nowhere"
-    return suggestion.suggestion.nearestPlace ?? fallbackPlace
+    // If there is no nearest place, just return blank
+    return suggestion.suggestion.nearestPlace ?? ""
   }
   
   func circleIcon(isSelected: Bool) -> some View {
