@@ -7,5 +7,5 @@
 
 
 public enum W3WPanelOutputEvent {
-  
+  case hasSuggestions(Bool)
 }

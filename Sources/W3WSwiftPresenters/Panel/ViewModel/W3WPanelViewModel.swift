@@ -73,7 +73,16 @@ public class W3WPanelViewModel: W3WPanelViewModelProtocol, W3WEventSubscriberPro
       items.set(footer: item)
     }
     
+    let hasSuggestions = items.list.contains(where: { item in
+      switch item {
+      case .suggestions(let suggestions): suggestions.count() > 0
+      default: false
+      }
+    })
+    output.send(.hasSuggestions(hasSuggestions))
+    
     objectWillChange.send()
+    
   }
   
 }
