@@ -71,7 +71,7 @@ struct W3WPanelSuggestionView: View {
               suggestion.suggestion.distanceToFocus?.description
                 .w3w
                 .style(
-                  color: scheme?.colors?.secondary,
+                  color: W3WColor.w3wLabelsQuaternary,
                   font: scheme?.styles?.font?.footnote
                 ) ?? "".w3w)
               .padding(.trailing)
