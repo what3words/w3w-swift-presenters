@@ -16,6 +16,10 @@ struct W3WPanelSuggestionView: View {
  
   let suggestion: W3WSelectableSuggestion
   
+  let language: W3WLanguage?
+  
+  let translations: W3WTranslationsProtocol?
+  
   var showDivider: Bool = true
   
   let scheme: W3WScheme?
@@ -42,6 +46,7 @@ struct W3WPanelSuggestionView: View {
       
       HStack(alignment: .firstTextBaseline, spacing: 0) {
         VStack(alignment: .leading, spacing: W3WPadding.fine.value) {
+          // 3waddress
           W3WTextView((suggestion.suggestion.words ?? "----.----.----")
             .w3w
             .style(
@@ -71,7 +76,7 @@ struct W3WPanelSuggestionView: View {
               suggestion.suggestion.distanceToFocus?.description
                 .w3w
                 .style(
-                  color: scheme?.colors?.secondary,
+                  color: W3WColor.w3wLabelsQuaternary,
                   font: scheme?.styles?.font?.footnote
                 ) ?? "".w3w)
               .padding(.trailing)
@@ -105,9 +110,15 @@ struct W3WPanelSuggestionView: View {
 // MARK: - Helpers
 private extension W3WPanelSuggestionView {
   var nearestPlace: String {
-    // If there is no nearest place, just return blank
-    return suggestion.suggestion.nearestPlace ?? ""
+    // currently, display 'near' keyword in English language only. Should improve later after we update our localisations for all languages
+    guard let placeName = suggestion.suggestion.nearestPlace else { return "" }
+    if let language, language.code == "en", let translations {
+      let nearString = translations.get(id: "near")
+      return String(format: "%@ %@", nearString, placeName)
+    }
+    return placeName
   }
+  
   
   func circleIcon(isSelected: Bool) -> some View {
     if isSelected {
