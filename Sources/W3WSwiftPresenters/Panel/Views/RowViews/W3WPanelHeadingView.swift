@@ -28,20 +28,14 @@ struct W3WPanelHeadingView<ViewModel: W3WPanelViewModelProtocol>: View {
         ),
         separator: false
       )
+      .multilineTextAlignment(.center)
       .frame(alignment: .center)
-      //.foregroundColor(scheme?.colors?.header?.foreground?.current.suColor)
       .background(scheme?.colors?.background?.suColor)
       .padding(W3WPadding.medium.value)
       Spacer()
     }
     .frame(maxWidth: .infinity, alignment: .leading)
-    //.background(scheme?.colors?.secondaryBackground?.suColor)
     .listRowBackground(scheme?.colors?.secondaryBackground?.suColor)
     .animation(.easeInOut(duration: 0.1))
   }
 }
-
-
-//#Preview {
-//    SwiftUIView()
-//}
