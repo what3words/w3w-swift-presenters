@@ -17,6 +17,10 @@ struct W3WPanelSuggestionsView: View {
   var suggestions: W3WSelectableSuggestions
   
   @State var scheme: W3WScheme?
+  
+  @State var language: W3WLanguage?
+  
+  let translations: W3WTranslationsProtocol?
 
   @State private var refresh = false
   
@@ -28,8 +32,10 @@ struct W3WPanelSuggestionsView: View {
         ForEach(suggestions.suggestions) { selectableSuggestion in
           W3WPanelSuggestionView(
             suggestion: selectableSuggestion,
+            language: language,
+            translations: translations,
             showDivider: selectableSuggestion.id != suggestions.suggestions.last?.id,
-            scheme: .standard) {
+            scheme: scheme) {
             if let s = selectableSuggestion.selected.value {
               selectableSuggestion.selected.send(!s)
             } else {
@@ -67,5 +73,5 @@ struct W3WPanelSuggestionsView: View {
   suggestions.add(suggestion: s3, selected: false)
   suggestions.add(suggestion: s4, selected: true)
 
-  return W3WPanelSuggestionsView(suggestions: suggestions)
+  return W3WPanelSuggestionsView(suggestions: suggestions, translations: nil)
 }

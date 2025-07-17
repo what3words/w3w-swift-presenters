@@ -44,7 +44,7 @@ struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
       W3WPanelTappableRow(icon: image, text: text, scheme: scheme)
       
     case .suggestions(let suggestions):
-      W3WPanelSuggestionsView(suggestions: suggestions, scheme: scheme)
+      W3WPanelSuggestionsView(suggestions: suggestions, scheme: scheme, language: viewModel.language, translations: viewModel.translations)
       
     default:
       Text("?")
