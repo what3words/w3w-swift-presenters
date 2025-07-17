@@ -24,5 +24,8 @@ public protocol W3WPanelViewModelProtocol: ObservableObject {
   
   /// the scheme to use
   var scheme: W3WScheme? { get set }
-
+  
+  var language: W3WLanguage? { get set }
+  
+  var translations: W3WTranslationsProtocol? { get set }
 }

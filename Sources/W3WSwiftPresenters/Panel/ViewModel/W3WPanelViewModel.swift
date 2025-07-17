@@ -12,14 +12,18 @@ import W3WSwiftThemes
 
 /// A panel view that contains list items
 public class W3WPanelViewModel: W3WPanelViewModelProtocol, W3WEventSubscriberProtocol {
+  
   public var subscriptions = W3WEventsSubscriptions()
-
+  
   /// the items in the list
   @Published public var items = W3WPanelItemList(items: [])
-
+  
   /// the scheme to use
   @Published public var scheme: W3WScheme?
   
+  @Published public var language: W3WLanguage?
+  
+  public var translations: W3WTranslationsProtocol?
   /// input events
   public var input = W3WEvent<W3WPanelInputEvent>()
   
@@ -31,7 +35,8 @@ public class W3WPanelViewModel: W3WPanelViewModelProtocol, W3WEventSubscriberPro
   /// - Parameters:
   ///     - scheme: the scheme to use for he views
   ///     - language: the language in use, used for writting direction
-  public init(scheme: W3WLive<W3WScheme?>? = nil, language: W3WLive<W3WLanguage?>? = nil) {
+  public init(scheme: W3WLive<W3WScheme?>? = nil, language: W3WLive<W3WLanguage?>? = nil, translations: W3WTranslationsProtocol?) {
+    self.translations = translations
     subscribe(to: input) { [weak self] event in
       self?.handle(event: event)
     }
@@ -45,17 +50,15 @@ public class W3WPanelViewModel: W3WPanelViewModelProtocol, W3WEventSubscriberPro
     }
   }
   
-  
   /// handle a language change
   func handle(language: W3WLanguage?) {
+    self.language = language
   }
-  
   
   /// handle a scheme change
   func handle(scheme: W3WScheme?) {
     self.scheme = scheme
   }
-  
   
   /// handle in input event
   func handle(event: W3WPanelInputEvent) {
