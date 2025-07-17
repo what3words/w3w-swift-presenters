@@ -18,6 +18,12 @@ public class W3WImagePickerViewController: UIImagePickerController, UIImagePicke
   /// keeps a reference to objects to keep them alive and release them on destruction
   public var keepAlive: [Any?] = []
   
+  /// Indicates whether an image has already been picked by the user.
+  ///
+  /// If this flag is `true`, it means the image picker has already completed its task,
+  /// and therefore the dismiss action (e.g. closing the picker manually) should be skipped
+  /// to avoid redundant or unintended behavior.
+  private var hasPickedImage = false
   
   public func set(viewModel: W3WImagePickerViewModelProtocol, keepAlive: [Any?] = []) {
     self.viewModel = viewModel
@@ -33,21 +39,22 @@ public class W3WImagePickerViewController: UIImagePickerController, UIImagePicke
   override public func viewDidLoad() {
     delegate = self
   }
-  
-  
+
   public override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
 
-    if isBeingDismissed {
+    if isBeingDismissed && !hasPickedImage {
       viewModel?.output.send(.dismiss)
     }
   }
+
   
   public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    guard let image = info[.originalImage] as? UIImage else { return }
-    if let cgImage = image.cgImage {
-      viewModel?.output.send(.image(cgImage))
-    }
+    guard
+      let image = info[.originalImage] as? UIImage,
+      let cgImage = image.cgImage else { return }
+    hasPickedImage = true
+    viewModel?.output.send(.image(cgImage))
   }
 
   
