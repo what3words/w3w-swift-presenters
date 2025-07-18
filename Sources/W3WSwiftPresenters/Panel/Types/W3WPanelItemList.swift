@@ -10,10 +10,11 @@ import Foundation
 
 public struct W3WOrderedItem<T> {
   public enum Kind {
-      case normal
-      case header
-      case footer
-    }
+    case normal
+    case header
+    case footer
+    case buttonHeader
+  }
   
   let id = UUID()
   
@@ -45,7 +46,7 @@ public class W3WPanelItemList {
       .filter({ $0.kind == .normal })
       .map { i in return i.item }
   }
-
+  
   
   public init(items: [W3WOrderedItem<W3WPanelItem>]) {
     self.items = items
@@ -60,12 +61,12 @@ public class W3WPanelItemList {
   public func highestOrder() -> Float {
     return items.max(by: { i, j in i.order < j.order })?.order ?? 1.0
   }
-
+  
   
   public func newLowOrder() -> Float {
     return lowestOrder() - 1.0
   }
-
+  
   
   public func newHighOrder() -> Float {
     return highestOrder() + 1.0
@@ -96,27 +97,49 @@ public class W3WPanelItemList {
     items.first(where: { $0.kind == .header })?.item
   }
   
+  public func getButtonHeader() -> W3WPanelItem? {
+    items.first(where: { $0.kind == .buttonHeader })?.item
+  }
+  
   
   public func getFooter() -> W3WPanelItem? {
     items.first(where: { $0.kind == .footer })?.item
   }
   
+  public func set(buttonHeader: W3WPanelItem?) {
+    if let buttonHeader {
+      if items.first(where: { $0.kind == .buttonHeader }) == nil {
+        items.append(W3WOrderedItem(item: buttonHeader, order: newHighOrder(), kind: .buttonHeader))
+      }
+    } else {
+      items.removeAll(where: { $0.kind == .buttonHeader })
+    }
+  }
   
+  // set header title, there is only 1
   public func set(header: W3WPanelItem?) {
     if let header {
-      items.append(W3WOrderedItem(item: header, order: newHighOrder(), kind: .header))
+      if items.first(where: { $0.kind == .header}) == nil {
+        items.append(W3WOrderedItem(item: header, order: newHighOrder(), kind: .header))
+      }
     } else {
       items.removeAll(where: { $0.kind == .header })
     }
   }
   
+  public func removeAllNormal(type: W3WOrderedItem<W3WPanelItem>.Kind) {
+    items.removeAll(where: { $0.kind == .normal })
+  }
+  
   
   public func set(footer: W3WPanelItem?) {
-    if let f = footer {
-      items.append(W3WOrderedItem(item: f, order: newLowOrder(), kind: .footer))
+    if let footer {
+      if items.first(where: {  $0.kind == .footer}) == nil {
+        items.append(W3WOrderedItem(item: footer, order: newLowOrder(), kind: .footer))
+      }
     } else {
       items.removeAll(where: { $0.kind == .footer })
     }
   }
-
+  
 }

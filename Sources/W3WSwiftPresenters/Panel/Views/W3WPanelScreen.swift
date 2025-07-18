@@ -14,7 +14,6 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
   @ObservedObject var viewModel: ViewModel
 
   var scheme: W3WScheme?
-
   
   public init(viewModel: ViewModel, scheme: W3WScheme? = nil) {
     self.viewModel = viewModel
@@ -25,9 +24,10 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
   public var body: some View {
     VStack(spacing: 0) {
       header
+      buttonHeader
       ScrollView {
-        ForEach((0...viewModel.items.listNormal.count - 1), id: \.self) { index in
-          W3WPanelRowView(viewModel: viewModel, item: viewModel.items.listNormal[index], scheme: scheme)
+        ForEach(viewModel.items.listNormal, id: \.id) { item in
+          W3WPanelRowView(viewModel: viewModel, item: item, scheme: scheme)
         }
       }
       footer
@@ -42,6 +42,17 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
       W3WPanelRowView(
         viewModel: viewModel,
         item: header,
+        scheme: scheme
+      )
+    }
+  }
+  
+  @ViewBuilder
+  private var buttonHeader: some View {
+    if let buttonHeader = viewModel.items.getButtonHeader() {
+      W3WPanelRowView(
+        viewModel: viewModel,
+        item: buttonHeader,
         scheme: scheme
       )
     }

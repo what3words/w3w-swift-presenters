@@ -7,9 +7,12 @@
 
 
 public enum W3WPanelInputEvent {
-  
+  case reset
   case add(item: W3WPanelItem)
   case remove(item: W3WPanelItem)
+  /// title header (unique)
   case header(item: W3WPanelItem?)
+  /// button header (unique)
+  case buttonHeader(item: W3WPanelItem?)
   case footer(item: W3WPanelItem?)
 }
