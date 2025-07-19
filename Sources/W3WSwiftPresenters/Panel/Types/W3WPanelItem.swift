@@ -14,7 +14,7 @@ import W3WSwiftThemes
 @available(*, deprecated, message: "W3WNotificaiton should be moved to W3WSwiftDesign if it's to work here")
 public struct W3WNotification { }
 
-public enum W3WPanelItem: Equatable, CustomStringConvertible {
+public enum W3WPanelItem: Equatable, CustomStringConvertible, Identifiable {
   case button(W3WButtonData)
   case buttons([W3WButtonData])
   case buttonsAndTitle([W3WButtonData], text: W3WLive<W3WString> = W3WLive<W3WString>("".w3w))
@@ -32,6 +32,9 @@ public enum W3WPanelItem: Equatable, CustomStringConvertible {
   case notification(W3WNotification)
   case actionItem(icon: W3WImage, text: W3WLive<W3WString>, W3WButtonData)
 
+  public var id: String {
+    self.description
+  }
   
   public static func == (lhs: W3WPanelItem, rhs: W3WPanelItem) -> Bool {
     switch (lhs, rhs) {
