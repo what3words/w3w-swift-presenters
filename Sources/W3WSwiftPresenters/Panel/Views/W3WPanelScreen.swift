@@ -32,7 +32,6 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
       footer
     }
     .background(scheme?.colors?.background?.current.suColor)
-    .layoutDirectionFromAppearance()
   }
   
   @ViewBuilder
