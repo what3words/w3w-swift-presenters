@@ -75,6 +75,15 @@ public class W3WSelectableSuggestions: W3WEventSubscriberProtocol {
   }
   
   
+  public func clear() {
+    suggestions.removeAll()
+    subscriptions = W3WEventsSubscriptions()
+    
+    W3WThread.runOnMain { [weak self] in
+      self?.update.send(true)
+    }
+  }
+  
   public func setAll(selected: Bool) {
     for suggestion in suggestions {
       suggestion.selected.send(selected)
