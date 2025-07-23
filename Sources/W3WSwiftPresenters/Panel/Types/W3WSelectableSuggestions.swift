@@ -6,13 +6,14 @@
 //
 
 import Combine
+import SwiftUI
 import W3WSwiftCore
 
 
-public class W3WSelectableSuggestions: W3WEventSubscriberProtocol {
+public class W3WSelectableSuggestions: W3WEventSubscriberProtocol, ObservableObject {
   public var subscriptions = W3WEventsSubscriptions()
   
-  var suggestions = [W3WSelectableSuggestion]()
+  @Published var suggestions = [W3WSelectableSuggestion]()
 
   public var update = W3WEvent<Bool>()
   

@@ -73,8 +73,6 @@ public class W3WPanelViewModel: W3WPanelViewModelProtocol, W3WEventSubscriberPro
       items.set(header: item)
     case .footer(item: let item):
       items.set(footer: item)
-    case .reset: // show default state when reset, remove all normal items
-      items.removeAll(type: .normal)
     }
     
     objectWillChange.send()

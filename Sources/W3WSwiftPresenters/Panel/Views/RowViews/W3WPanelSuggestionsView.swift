@@ -14,7 +14,7 @@ import W3WSwiftThemes
 struct W3WPanelSuggestionsView: View {
   @State private var cancellable: AnyCancellable?
 
-  var suggestions: W3WSelectableSuggestions
+  @ObservedObject var suggestions: W3WSelectableSuggestions
   
   @State var scheme: W3WScheme?
   
