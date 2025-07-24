@@ -15,17 +15,16 @@ struct W3WPanelButtonsView: View {
 
   @State var buttons: [W3WButtonData]
 
-  var scheme: W3WScheme?
+  @State var theme: W3WTheme?
 
   var body: some View {
     HStack {
       ForEach(buttons) { button in
-        _Button(button: button, scheme: scheme)
+        _Button(button: button, theme: theme)
       }
     }
     .padding(.bottom, W3WPadding.light.value)
     .padding(.horizontal, W3WPadding.bold.value)
-    .background(scheme?.colors?.background?.current.suColor)
   }
 }
 
@@ -33,23 +32,24 @@ private extension W3WPanelButtonsView {
   struct _Button: View {
     @ObservedObject var button: W3WButtonData
     
-    var scheme: W3WScheme?
+    @State var theme: W3WTheme?
     
     // Consider using a preference key to track the biggest width
     private let minButtonWidth: CGFloat = 93
     
     var body: some View {
       if let title = button.title {
+        //TODO: - (Kaley) Can replace this with W3WSUButton (?)
         Button(action: button.onTap) {
           Text(title)
             .padding(.vertical, W3WPadding.extraMedium.value)
             .padding(.horizontal, W3WPadding.bold.value)
             .frame(minWidth: minButtonWidth)
-            .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
+            .foregroundColor(theme?.labelsSecondary?.suColor)
             .background(
               button.highlight == .primary
-              ? scheme?.colors?.secondaryBackground?.current.suColor
-              : W3WColor.w3wFillsSenary.suColor
+              ? theme?.fillsQuaternary?.suColor
+              : theme?.fillsSenary?.suColor
             )
             .clipShape(.rect(cornerRadius: buttonCornerRadius))
         }
@@ -57,21 +57,12 @@ private extension W3WPanelButtonsView {
     }
     
     private var buttonCornerRadius: CGFloat {
-      scheme?.styles?.cornerRadius?.value ?? 8
+      W3WPadding.light.value
     }
   }
 }
 
 #Preview {
-  let scheme = W3WLive<W3WScheme?>(
-    W3WScheme(colors: W3WColors(
-      foreground: .white,
-      background: .lightBlue,
-      secondaryBackground: .blue
-    ))
-  )
-
-  
   W3WPanelButtonsView(
     buttons: [
       W3WButtonData(icon: .badge, title: "titleA", onTap: { }),

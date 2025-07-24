@@ -16,8 +16,8 @@ struct W3WPanelSuggestionsView: View {
 
   @ObservedObject var suggestions: W3WSelectableSuggestions
   
-  @State var scheme: W3WScheme?
-  
+  @State var theme: W3WTheme?
+
   @State var language: W3WLanguage?
   
   let translations: W3WTranslationsProtocol?
@@ -35,7 +35,7 @@ struct W3WPanelSuggestionsView: View {
             language: language,
             translations: translations,
             showDivider: selectableSuggestion.id != suggestions.suggestions.last?.id,
-            scheme: scheme) {
+            theme: theme) {
             if let s = selectableSuggestion.selected.value {
               selectableSuggestion.selected.send(!s)
             } else {

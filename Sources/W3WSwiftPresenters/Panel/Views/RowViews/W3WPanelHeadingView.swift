@@ -13,7 +13,7 @@ struct W3WPanelHeadingView<ViewModel: W3WPanelViewModelProtocol>: View {
   
   var title: W3WString
 
-  var scheme: W3WScheme?
+  @State var theme: W3WTheme?
 
   // view model
   @ObservedObject var viewModel: ViewModel
@@ -21,21 +21,18 @@ struct W3WPanelHeadingView<ViewModel: W3WPanelViewModelProtocol>: View {
   var body: some View {
     HStack {
       Spacer()
-      W3WTextView(
-        title.style(
-          color: scheme?.colors?.header?.foreground,
-          font: scheme?.styles?.fonts?.headline
-        ),
-        separator: false
-      )
+      Text(title.asString())
+        .scheme(textScheme)
       .multilineTextAlignment(.center)
       .frame(alignment: .center)
-      .background(scheme?.colors?.background?.suColor)
       .padding(W3WPadding.medium.value)
       Spacer()
     }
     .frame(maxWidth: .infinity, alignment: .leading)
-    .listRowBackground(scheme?.colors?.secondaryBackground?.suColor)
     .animation(.easeInOut(duration: 0.1))
+  }
+  
+  var textScheme: W3WScheme? {
+    theme?.labelScheme(grade: .tertiary, fontStyle: .body, weight: .bold)
   }
 }

@@ -18,8 +18,7 @@ public class W3WPanelViewModel: W3WPanelViewModelProtocol, W3WEventSubscriberPro
   /// the items in the list
   @Published public var items = W3WPanelItemList(items: [])
   
-  /// the scheme to use
-  @Published public var scheme: W3WScheme?
+  @Published public var theme: W3WTheme?
   
   @Published public var language: W3WLanguage?
   
@@ -35,14 +34,15 @@ public class W3WPanelViewModel: W3WPanelViewModelProtocol, W3WEventSubscriberPro
   /// - Parameters:
   ///     - scheme: the scheme to use for he views
   ///     - language: the language in use, used for writting direction
-  public init(scheme: W3WLive<W3WScheme?>? = nil, language: W3WLive<W3WLanguage?>? = nil, translations: W3WTranslationsProtocol?) {
+  public init(theme: W3WLive<W3WTheme?>? = nil, language: W3WLive<W3WLanguage?>? = nil, translations: W3WTranslationsProtocol?) {
     self.translations = translations
+    self.theme = theme?.value
     subscribe(to: input) { [weak self] event in
       self?.handle(event: event)
     }
     
-    subscribe(to: scheme) { [weak self] scheme in
-      self?.handle(scheme: scheme)
+    subscribe(to: theme) { [weak self] theme in
+      self?.theme = theme
     }
     
     subscribe(to: language) { [weak self] language in
@@ -56,8 +56,8 @@ public class W3WPanelViewModel: W3WPanelViewModelProtocol, W3WEventSubscriberPro
   }
   
   /// handle a scheme change
-  func handle(scheme: W3WScheme?) {
-    self.scheme = scheme
+  func handle(theme: W3WTheme?) {
+    self.theme = theme
   }
   
   /// handle in input event

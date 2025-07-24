@@ -17,7 +17,7 @@ struct W3WPanelActionItemView: View {
   var icon: W3WImage
   var text: W3WLive<W3WString>
   var button: W3WButtonData
-  @State var scheme: W3WScheme?
+  @State var theme: W3WTheme?
 
   @State var liveText = NSAttributedString()
 
@@ -25,6 +25,7 @@ struct W3WPanelActionItemView: View {
     HStack {
       Image(uiImage: icon.get())
       Text(liveText.string)
+        .scheme(theme?.labelScheme(grade: .secondary, fontStyle: .subheadline, weight: .regular))
       Spacer()
       Button(button.title ?? "", action: { button.onTap() })
     }
