@@ -22,7 +22,7 @@ struct W3WPanelSuggestionView: View {
   
   var showDivider: Bool = true
   
-  let scheme: W3WScheme?
+  @State var theme: W3WTheme?
   
   let onTap: () -> Void
   
@@ -40,45 +40,28 @@ struct W3WPanelSuggestionView: View {
       }
       
       W3WTextView("".w3w
-        .style(font: scheme?.styles?.font?.body)
+        .style(font: theme?.labelScheme(grade: .primary, fontStyle: .body, weight: .medium).styles?.font)
         .withSlashes()
       )
       
       HStack(alignment: .firstTextBaseline, spacing: 0) {
         VStack(alignment: .leading, spacing: W3WPadding.fine.value) {
-          W3WTextView((suggestion.suggestion.words ?? "----.----.----")
-            .w3w
-            .style(
-              color: W3WColor.w3wLabelsTertiary,
-              font: scheme?.styles?.font?.body
-            )
-          )
+          Text(suggestion.suggestion.words ?? "----.----.----")
+            .scheme(wordsScheme)
           .lineLimit(1)
           .allowsTightening(true)
           .minimumScaleFactor(0.5)
           
           HStack {
-            W3WTextView(nearestPlace
-              .w3w
-              .style(
-                color: W3WColor.w3wLabelsQuaternary,
-                font: scheme?.styles?.font?.footnote
-              )
-            )
+            Text(nearestPlace)
+              .scheme(nearestPlaceScheme)
             .lineLimit(1)
-            .allowsTightening(true)
-            .minimumScaleFactor(0.5)
+            .allowsTightening(false)
             
             Spacer()
             
-            W3WTextView(
-              suggestion.suggestion.distanceToFocus?.description
-                .w3w
-                .style(
-                  color: W3WColor.w3wLabelsQuaternary,
-                  font: scheme?.styles?.font?.footnote
-                ) ?? "".w3w)
-            .padding(.trailing)
+            Text(suggestion.suggestion.distanceToFocus?.description ?? "")
+              .scheme(distanceScheme)
           }
         }
       }
@@ -132,23 +115,37 @@ private extension W3WPanelSuggestionView {
   }
 }
 
+private extension W3WPanelSuggestionView {
+  var nearestPlaceScheme: W3WScheme? {
+    theme?.labelScheme(grade: .quaternary, fontStyle: .footnote, weight: .regular)
+  }
+  
+  var distanceScheme: W3WScheme? {
+    theme?.labelScheme(grade: .quaternary, fontStyle: .footnote, weight: .bold)
+  }
+  
+  var wordsScheme: W3WScheme? {
+    theme?.labelScheme(grade: .tertiary, fontStyle: .body, weight: .semibold)
+  }
+}
+
 #Preview {
   let s1 = W3WBaseSuggestion(words: "xxx.xxx.xxx", nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
   let s2 = W3WBaseSuggestion(words: "yyyy.yyyy.yyyy", nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
   let s3 = W3WBaseSuggestion(words: "zz.zz.zz", country: W3WBaseCountry(code: "ZZ"), nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
   let s4 = W3WBaseSuggestion(words: "reallyreally.longverylong.threewordaddress", nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
 
-  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s1, selected: false), language: nil, translations: nil, scheme: .standard) { print("x") }
-  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s2, selected: false), language: nil, translations: nil, scheme: .standard) { print("x") }
-  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s3, selected: false), language: nil, translations: nil, scheme: .standard) { print("x") }
-  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s4, selected: false), language: nil, translations: nil, scheme: .standard) { print("x") }
-  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s1, selected: false), language: nil, translations: nil, scheme: .standard) { print("x") }
-  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s2, selected: false), language: nil, translations: nil, scheme: .standard) { print("x") }
-  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s3, selected: false), language: nil, translations: nil, scheme: .standard) { print("x") }
-  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s1, selected: false), language: nil, translations: nil, scheme: .standard) { print("x") }
-  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s2, selected: false), language: nil, translations: nil, scheme: .standard) { print("x") }
-  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s3, selected: false), language: nil, translations: nil, scheme: .standard) { print("x") }
-  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s1, selected: false), language: nil, translations: nil, scheme: .standard) { print("x") }
-  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s2, selected: false), language: nil, translations: nil, scheme: .standard) { print("x") }
-  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s3, selected: false), language: nil, translations: nil, scheme: .standard) { print("x") }
+  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s1, selected: false), language: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s2, selected: false), language: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s3, selected: false), language: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s4, selected: false), language: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s1, selected: false), language: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s2, selected: false), language: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s3, selected: false), language: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s1, selected: false), language: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s2, selected: false), language: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s3, selected: false), language: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s1, selected: false), language: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s2, selected: false), language: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: W3WSelectableSuggestion(suggestion: s3, selected: false), language: nil, translations: nil) { print("x") }
 }

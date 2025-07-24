@@ -22,8 +22,7 @@ public protocol W3WPanelViewModelProtocol: ObservableObject {
   /// output events
   var output: W3WEvent<W3WPanelOutputEvent> { get set }
   
-  /// the scheme to use
-  var scheme: W3WScheme? { get set }
+  var theme: W3WTheme? { get set }
   
   var language: W3WLanguage? { get set }
   

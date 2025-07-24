@@ -18,21 +18,16 @@ struct W3WPanelButtonsAndTitleView: View {
   
   var text: W3WLive<W3WString>
 
-  var scheme: W3WScheme?
+  @State var theme: W3WTheme?
 
   @State var liveText = W3WString()
 
   var body: some View {
     HStack(spacing: W3WPadding.none.value) {
       if liveText.asString() != "" {
-        W3WTextView(liveText
-          .style(
-            color: W3WColor(
-              light: W3WCoreColor.black,
-              dark: W3WCoreColor.white
-            )
-          )
-        )
+        // TODO: - Should fix highlighted text
+        Text(liveText.asString())
+          .scheme(theme?.labelScheme(grade: .primary, fontStyle: .body, weight: .regular).with(foreground: W3WColor.w3wLabelsPrimaryBlackInverse))
         Spacer()
       }
       HStack {
@@ -50,10 +45,10 @@ struct W3WPanelButtonsAndTitleView: View {
               .padding(.vertical, W3WPadding.extraMedium.value)
               .padding(.leading, W3WPadding.light.value)
               .padding(.trailing, W3WPadding.medium.value)
-              .foregroundColor(scheme?.colors?.highlight?.foreground?.current.suColor)
+              .foregroundColor(theme?.labelsSecondary?.suColor)
               .background((button.highlight == .primary)
-                          ? scheme?.colors?.secondaryBackground?.current.suColor
-                          : W3WColor.w3wFillsSenary.suColor)
+                          ? theme?.fillsQuaternary?.suColor
+                          : theme?.fillsSenary?.suColor)
               .clipShape(.capsule)
             }
           }
@@ -62,7 +57,7 @@ struct W3WPanelButtonsAndTitleView: View {
     }
     .padding(.bottom, W3WPadding.light.value)
     .padding(.horizontal, W3WPadding.bold.value)
-    .background(scheme?.colors?.background?.current.suColor)
+    .background(theme?.systemBackgroundBasePrimary?.suColor)
     .onAppear { // Subscribe to the text changes
       cancellable = text
         .sink { content in

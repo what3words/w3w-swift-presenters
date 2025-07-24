@@ -12,26 +12,22 @@ import W3WSwiftThemes
 public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
   // main view model
   @ObservedObject var viewModel: ViewModel
-
-  var scheme: W3WScheme?
   
-  public init(viewModel: ViewModel, scheme: W3WScheme? = nil) {
+  public init(viewModel: ViewModel) {
     self.viewModel = viewModel
-    self.scheme = scheme
   }
-  
   
   public var body: some View {
     VStack(spacing: 0) {
       header
       ScrollView {
         ForEach(viewModel.items.listNormal, id: \.id) { item in
-          W3WPanelRowView(viewModel: viewModel, item: item, scheme: scheme)
+          W3WPanelRowView(viewModel: viewModel, item: item)
         }
       }
       footer
     }
-    .background(scheme?.colors?.background?.current.suColor)
+    .background(viewModel.theme?.systemBackgroundBasePrimary?.suColor)
   }
   
   @ViewBuilder
@@ -39,8 +35,7 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
     if let header = viewModel.items.getHeader() {
       W3WPanelRowView(
         viewModel: viewModel,
-        item: header,
-        scheme: scheme
+        item: header
       )
     }
   }
@@ -51,10 +46,9 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
       VStack {
         Divider()
           .shadow(radius: 1, x: 0, y: 1)
-        W3WPanelRowView(viewModel: viewModel, item: viewModel.items.list[0], scheme: scheme)
+        W3WPanelRowView(viewModel: viewModel, item: viewModel.items.list[0])
       }
       .padding(.top, 16)
-      .background(scheme?.colors?.background?.current.suColor)
     }
   }
 }
@@ -65,7 +59,7 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
   let s3 = W3WBaseSuggestion(words: "zz.zz.zz", country: W3WBaseCountry(code: "ZZ"), nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
   let s4 = W3WBaseSuggestion(words: "reallyreally.longverylong.threewordaddress", nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
 
-  var items = W3WPanelViewModel(scheme: W3WLive<W3WScheme?>(.w3w), language: W3WLive<W3WLanguage?>(W3WBaseLanguage(locale: "en")), translations: nil)
+  var items = W3WPanelViewModel(theme: nil, language: W3WLive<W3WLanguage?>(W3WBaseLanguage(locale: "en")), translations: nil)
 
-  W3WPanelScreen(viewModel: items, scheme: .w3w)
+  W3WPanelScreen(viewModel: items)
 }
