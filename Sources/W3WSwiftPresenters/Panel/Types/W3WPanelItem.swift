@@ -23,11 +23,10 @@ public enum W3WPanelItem: Equatable, CustomStringConvertible, Identifiable {
   case message(W3WLive<W3WString>)
   case suggestion(W3WSuggestion, selected: W3WLive<Bool>? = nil)
   case suggestions(W3WSelectableSuggestions)
-  //case selectableSuggestion(W3WSuggestion, W3WLive<Bool>)
   case segmentedControl([W3WButtonData])
   case route(time: W3WLive<W3WDuration>, distance: W3WLive<W3WDistance>, eta: W3WLive<Date>, [W3WButtonData])
   case routeFinished(W3WSuggestion)
-  case title(W3WLive<W3WString>)
+  case title(String)
   case heading(W3WLive<W3WString>)
   case notification(W3WNotification)
   case actionItem(icon: W3WImage, text: W3WLive<W3WString>, W3WButtonData)
@@ -96,7 +95,7 @@ public enum W3WPanelItem: Equatable, CustomStringConvertible, Identifiable {
       return "route finished"
       
     case .title(let text):
-      return text.value.asString()
+      return text
       
     case .heading(let text):
       return text.value.asString()
