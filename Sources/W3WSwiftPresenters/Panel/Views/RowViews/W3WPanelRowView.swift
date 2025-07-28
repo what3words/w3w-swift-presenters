@@ -18,6 +18,8 @@ struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
   
   var body: some View {
     switch item {
+    case .title(let title):
+      W3WPanelTitleView(title: title, theme: viewModel.theme)
       
     case .heading(let text):
       W3WPanelHeadingView(title: text.value, theme: viewModel.theme, viewModel: viewModel)
