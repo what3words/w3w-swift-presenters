@@ -26,7 +26,7 @@ struct W3WPanelButtonsAndTitleView: View {
     HStack(spacing: W3WPadding.none.value) {
       if liveText.asString() != "" {
         if #available(iOS 15, *) {
-          HighlightedText(text: liveText.asString(),
+          W3WHighlightedText(text: liveText.asString(),
                           color: textScheme?.colors?.foreground?.suColor,
                           font: textScheme?.styles?.font,
                           highlightedText: liveHighlightedText.asString(),
