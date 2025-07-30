@@ -25,19 +25,13 @@ struct W3WPanelButtonsAndTitleView: View {
   var body: some View {
     HStack(spacing: W3WPadding.none.value) {
       if liveText.asString() != "" {
-        if #available(iOS 15, *) {
-          W3WHighlightedText(text: liveText.asString(),
-                          color: textScheme?.colors?.foreground?.suColor,
-                          font: textScheme?.styles?.font,
-                          highlightedText: liveHighlightedText.asString(),
-                          highlightedTextColor: highlightedTextScheme?.colors?.foreground?.suColor,
-                          highlightedTextFont: highlightedTextScheme?.styles?.font
-          )
-        } else {
-          // Fallback on earlier versions
-          Text(liveText.asString())
-            .scheme(textScheme)
-        }
+        W3WHighlightedText(text: liveText.asString(),
+                        color: textScheme?.colors?.foreground?.suColor,
+                        font: textScheme?.styles?.font,
+                        highlightedText: liveHighlightedText.asString(),
+                        highlightedTextColor: highlightedTextScheme?.colors?.foreground?.suColor,
+                        highlightedTextFont: highlightedTextScheme?.styles?.font
+        )
         Spacer()
       }
       HStack {
