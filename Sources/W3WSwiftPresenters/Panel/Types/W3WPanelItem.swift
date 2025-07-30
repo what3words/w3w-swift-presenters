@@ -17,7 +17,7 @@ public struct W3WNotification { }
 public enum W3WPanelItem: Equatable, CustomStringConvertible, Identifiable {
   case button(W3WButtonData)
   case buttons([W3WButtonData])
-  case buttonsAndTitle([W3WButtonData], text: W3WLive<W3WString> = W3WLive<W3WString>("".w3w))
+  case buttonsAndTitle([W3WButtonData], text: W3WLive<W3WString> = W3WLive<W3WString>("".w3w), highlightedText: W3WLive<W3WString> = W3WLive<W3WString>("".w3w))
   case tappableRow(icon: W3WImage, text: W3WLive<W3WString>)
   case address(address: String, [W3WButtonData])
   case message(W3WLive<W3WString>)
@@ -50,7 +50,7 @@ public enum W3WPanelItem: Equatable, CustomStringConvertible, Identifiable {
     case (.buttons(let lhsButtons), .buttons(let rhsButtons)):
       return lhsButtons.first?.id == rhsButtons.first?.id
       
-    case (.buttonsAndTitle(let lhsButtons, _), .buttonsAndTitle(let rhsButtons, _)):
+    case (.buttonsAndTitle(let lhsButtons, _, _), .buttonsAndTitle(let rhsButtons, _, _)):
       return (lhsButtons.first?.id == rhsButtons.first?.id) //&& (lhsText.value.asString() == rhsText.value.asString())
       
     default:
@@ -67,7 +67,7 @@ public enum W3WPanelItem: Equatable, CustomStringConvertible, Identifiable {
     case .buttons(let buttons):
       return "\(buttons.count) buttons"
       
-    case let .buttonsAndTitle(buttons, title):
+    case let .buttonsAndTitle(buttons, title, _):
       return "\(buttons.count) buttons & \(title.value.asString())"
       
     case .tappableRow(_, text: let text):

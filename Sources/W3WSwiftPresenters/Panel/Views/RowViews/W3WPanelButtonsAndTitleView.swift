@@ -10,24 +10,28 @@ import Combine
 import W3WSwiftCore
 import W3WSwiftThemes
 import W3WSwiftDesign
+import W3WSwiftDesignSwiftUI
 
 struct W3WPanelButtonsAndTitleView: View {
-  @State private var cancellable: AnyCancellable?
-
+  @State private var cancellables = Set<AnyCancellable>()
   var buttons: [W3WButtonData]
-  
   var text: W3WLive<W3WString>
-
+  var highlightedText: W3WLive<W3WString>?
+  @State private var liveText = W3WString()
+  @State private var liveHighlightedText = W3WString()
+  
   @State var theme: W3WTheme?
-
-  @State var liveText = W3WString()
-
+  
   var body: some View {
     HStack(spacing: W3WPadding.none.value) {
       if liveText.asString() != "" {
-        // TODO: - Should fix highlighted text
-        Text(liveText.asString())
-          .scheme(theme?.labelScheme(grade: .primary, fontStyle: .body, weight: .regular).with(foreground: W3WColor.w3wLabelsPrimaryBlackInverse))
+        W3WHighlightedText(text: liveText.asString(),
+                        color: textScheme?.colors?.foreground?.suColor,
+                        font: textScheme?.styles?.font,
+                        highlightedText: liveHighlightedText.asString(),
+                        highlightedTextColor: highlightedTextScheme?.colors?.foreground?.suColor,
+                        highlightedTextFont: highlightedTextScheme?.styles?.font
+        )
         Spacer()
       }
       HStack {
@@ -59,15 +63,26 @@ struct W3WPanelButtonsAndTitleView: View {
     .padding(.horizontal, W3WPadding.bold.value)
     .background(theme?.systemBackgroundBasePrimary?.suColor)
     .onAppear { // Subscribe to the text changes
-      cancellable = text
-        .sink { content in
-          liveText = text.value
-        }
+      text.sink { content in
+        liveText = content
+      }
+      .store(in: &cancellables)
+      
+      highlightedText?.sink(receiveValue: { content in
+        liveHighlightedText = content
+      })
+      .store(in: &cancellables)
     }
-    .onDisappear {
-      // Cancel the subscription
-      cancellable?.cancel()
-    }
+  }
+}
+
+extension W3WPanelButtonsAndTitleView {
+  var textScheme: W3WScheme? {
+    theme?.labelScheme(grade: .primary, fontStyle: .body, weight: .regular).with(foreground: W3WColor.w3wLabelsPrimaryBlackInverse)
+  }
+  
+  var highlightedTextScheme: W3WScheme? {
+    theme?.labelScheme(grade: .primary, fontStyle: .body, weight: .bold).with(foreground: W3WColor.w3wLabelsPrimaryBlackInverse)
   }
 }
 
@@ -80,7 +95,7 @@ struct W3WPanelButtonsAndTitleView: View {
       secondaryBackground: .blue
     ))
   )
-
+  
   
   W3WPanelButtonsAndTitleView(
     buttons: [

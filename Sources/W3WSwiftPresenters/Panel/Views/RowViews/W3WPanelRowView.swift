@@ -36,8 +36,8 @@ struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
     case .buttons(let buttons):
       W3WPanelButtonsView(buttons: buttons, theme: viewModel.theme)
       
-    case .buttonsAndTitle(let buttons, text: let text):
-      W3WPanelButtonsAndTitleView(buttons: buttons, text: text, theme: viewModel.theme)
+    case .buttonsAndTitle(let buttons, text: let text, let highlightedText):
+      W3WPanelButtonsAndTitleView(buttons: buttons, text: text, highlightedText: highlightedText, theme: viewModel.theme)
       
     case .suggestions(let suggestions):
       W3WPanelSuggestionsView(suggestions: suggestions,
