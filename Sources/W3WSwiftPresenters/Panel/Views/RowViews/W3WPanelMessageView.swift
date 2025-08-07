@@ -16,7 +16,7 @@ struct W3WPanelMessageView<ViewModel: W3WPanelViewModelProtocol>: View {
 
   var message: W3WLive<W3WString>
 
-  var scheme: W3WScheme? = .w3w
+  @State var theme: W3WTheme?
   
   // view model
   @ObservedObject var viewModel: ViewModel
@@ -26,14 +26,11 @@ struct W3WPanelMessageView<ViewModel: W3WPanelViewModelProtocol>: View {
 
   var body: some View {
     HStack {
-      W3WTextView(liveText, separator: false)
-          .foregroundColor(scheme?.colors?.secondary?.suColor)
-          .background(scheme?.colors?.background?.suColor)
+      Text(message.value.string.string)
+        .scheme(theme?.labelScheme(grade: .tertiary, fontStyle: .body, weight: .bold))
       Spacer()
     }
     .frame(maxWidth: .infinity, alignment: .leading)
-    .background(scheme?.colors?.secondaryBackground?.suColor)
-    .listRowBackground(scheme?.colors?.secondaryBackground?.suColor)
     .animation(.easeInOut(duration: 0.1))
     .onAppear {
       // Subscribe to the CurrentValueSubject and update the countText on change

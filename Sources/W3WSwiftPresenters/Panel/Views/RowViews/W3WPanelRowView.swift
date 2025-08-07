@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import W3WSwiftThemes
+
 
 struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
   
@@ -16,58 +18,35 @@ struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
   
   var body: some View {
     switch item {
-        
-      case .heading(let text):
-        W3WPanelHeadingView(title: text.value, viewModel: viewModel)
-        
-      case .message(let message):
-        W3WPanelMessageView(message: message, viewModel: viewModel)
-        
-      case .actionItem(icon: let icon, text: let text, let button):
-        W3WPanelActionItemView(icon: icon, text: text, button: button)
-        
-      case .buttons(let buttons, text: let text):
-        W3WPanelButtonsView(buttons: buttons, text: text, viewModel: viewModel)
-        
-      case .tappableRow(icon: let image, text: let text):
-        W3WPanelTappableRow(icon: image, text: text)
-        
-        //case .suggestion(let suggestion, let selected):
-        //  W3WPanelSuggestionView(suggestion: suggestion, scheme: theme?.basicScheme(), selected: selected?.value, onTap: { print(suggestion) })
-        
-      case .suggestions(let suggestions):
-        W3WPanelSuggestionsView(suggestions: suggestions)
-        
-        //  W3WPanelMessageView(message: suggestion.words ?? "", viewModel: viewModel)
-        
-        //          case .address(address: let address, let buttons):
-        //            W3WPanelMessageView(message: W3WLive<W3WString>(address), viewModel: viewModel)
-        //
-        //          case .notification(let notification):
-        //            W3WPanelMessageView(message: notification.message?.asString() ?? "", viewModel: viewModel)
-        //
-        //          case .route(time: let time, distance: let distance, eta: let eta, let buttons):
-        //            W3WPanelMessageView(message: time.value.seconds.description, viewModel: viewModel)
-        //
-        //          case .routeFinished(let suggestion):
-        //            W3WPanelMessageView(message: suggestion.words ?? "", viewModel: viewModel)
-        //
-        //          case .segmentedControl(let buttons):
-        //            W3WPanelMessageView(message: buttons.description, viewModel: viewModel)
-        //
-        //          case .selectableSuggestion(let suggestion, let value):
-        //            W3WPanelMessageView(message: (suggestion.words ?? "") + (value.value ? "on" : "off"), viewModel: viewModel)
-        //
-        //          case .title(let title):
-        //            W3WPanelMessageView(message: title.value.asString(), viewModel: viewModel)
-        
-      default:
-        Text("?")
-    }  }
+    case .title(let title):
+      W3WPanelTitleView(title: title, theme: viewModel.theme)
+      
+    case .heading(let text):
+      W3WPanelHeadingView(title: text.value, theme: viewModel.theme, viewModel: viewModel)
+      
+    case .message(let message):
+      W3WPanelMessageView(message: message, theme: viewModel.theme, viewModel: viewModel)
+      
+    case .actionItem(icon: let icon, text: let text, let button):
+      W3WPanelActionItemView(icon: icon, text: text, button: button, theme: viewModel.theme)
+      
+    case .button(let button):
+      W3WPanelPrimaryActionView(button: button, theme: viewModel.theme)
+      
+    case .buttons(let buttons):
+      W3WPanelButtonsView(buttons: buttons, theme: viewModel.theme)
+      
+    case .buttonsAndTitle(let buttons, text: let text, let highlightedText):
+      W3WPanelButtonsAndTitleView(buttons: buttons, text: text, highlightedText: highlightedText, theme: viewModel.theme)
+      
+    case .suggestions(let suggestions):
+      W3WPanelSuggestionsView(suggestions: suggestions,
+                              theme: viewModel.theme,
+                              language: viewModel.language,
+                              translations: viewModel.translations)
+      
+    default:
+      Text("?")
+    }
+  }
 }
-
-
-
-//#Preview {
-//    SwiftUIView()
-//}

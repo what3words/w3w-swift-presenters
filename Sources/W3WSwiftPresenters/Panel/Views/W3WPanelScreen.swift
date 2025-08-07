@@ -10,34 +10,45 @@ import W3WSwiftCore
 import W3WSwiftThemes
 
 public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
-  
   // main view model
   @ObservedObject var viewModel: ViewModel
-
-  var theme: W3WTheme? = .what3words
-
   
-  public init(viewModel: ViewModel, theme: W3WTheme? = nil) {
+  public init(viewModel: ViewModel) {
     self.viewModel = viewModel
-    self.theme = theme
   }
   
-  
   public var body: some View {
-    ZStack {
-      if viewModel.items.list.count > 0 {
-        ScrollView {
-          ForEach((0...viewModel.items.listNoFooters.count - 1), id: \.self) { index in
-            W3WPanelRowView(viewModel: viewModel, item: viewModel.items.listNoFooters[index])
-          }
+    VStack(spacing: 0) {
+      header
+      ScrollView {
+        ForEach(viewModel.items.listNormal, id: \.id) { item in
+          W3WPanelRowView(viewModel: viewModel, item: item)
         }
       }
-      if let footer = viewModel.items.getFooter() {
-        VStack {
-          Spacer()
-          W3WPanelRowView(viewModel: viewModel, item: viewModel.items.list[0])
-        }
+      footer
+    }
+    .background(viewModel.theme?.systemBackgroundBasePrimary?.suColor)
+  }
+  
+  @ViewBuilder
+  private var header: some View {
+    if let header = viewModel.items.getHeader() {
+      W3WPanelRowView(
+        viewModel: viewModel,
+        item: header
+      )
+    }
+  }
+  
+  @ViewBuilder
+  private var footer: some View {
+    if let _ = viewModel.items.getFooter() {
+      VStack {
+        Divider()
+          .shadow(radius: 1, x: 0, y: 1)
+        W3WPanelRowView(viewModel: viewModel, item: viewModel.items.list[0])
       }
+      .padding(.top, 16)
     }
   }
 }
@@ -48,60 +59,7 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
   let s3 = W3WBaseSuggestion(words: "zz.zz.zz", country: W3WBaseCountry(code: "ZZ"), nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
   let s4 = W3WBaseSuggestion(words: "reallyreally.longverylong.threewordaddress", nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
 
-  var items = W3WPanelViewModel()
+  var items = W3WPanelViewModel(theme: nil, language: W3WLive<W3WLanguage?>(W3WBaseLanguage(locale: "en")), translations: nil)
 
   W3WPanelScreen(viewModel: items)
 }
-
-
-
-
-//            switch viewModel.items.list[index] {
-//
-//              case .heading(let text):
-//                W3WPanelHeadingView(title: text.value, viewModel: viewModel)
-//
-//              case .message(let message):
-//                W3WPanelMessageView(message: message, viewModel: viewModel)
-//
-//              case .actionItem(icon: let icon, text: let text, let button):
-//                W3WPanelActionItemView(icon: icon, text: text, button: button)
-//
-//              case .buttons(let buttons, text: let text):
-//                W3WPanelButtonsView(buttons: buttons, text: text, viewModel: viewModel)
-//
-//              case .tappableRow(icon: let image, text: let text):
-//                W3WPanelTappableRow(icon: image, text: text)
-//
-//                //case .suggestion(let suggestion, let selected):
-//                //  W3WPanelSuggestionView(suggestion: suggestion, scheme: theme?.basicScheme(), selected: selected?.value, onTap: { print(suggestion) })
-//
-//              case .suggestions(let suggestions):
-//                W3WPanelSuggestionsView(suggestions: suggestions)
-//
-//                //  W3WPanelMessageView(message: suggestion.words ?? "", viewModel: viewModel)
-//
-//                //          case .address(address: let address, let buttons):
-//                //            W3WPanelMessageView(message: W3WLive<W3WString>(address), viewModel: viewModel)
-//                //
-//                //          case .notification(let notification):
-//                //            W3WPanelMessageView(message: notification.message?.asString() ?? "", viewModel: viewModel)
-//                //
-//                //          case .route(time: let time, distance: let distance, eta: let eta, let buttons):
-//                //            W3WPanelMessageView(message: time.value.seconds.description, viewModel: viewModel)
-//                //
-//                //          case .routeFinished(let suggestion):
-//                //            W3WPanelMessageView(message: suggestion.words ?? "", viewModel: viewModel)
-//                //
-//                //          case .segmentedControl(let buttons):
-//                //            W3WPanelMessageView(message: buttons.description, viewModel: viewModel)
-//                //
-//                //          case .selectableSuggestion(let suggestion, let value):
-//                //            W3WPanelMessageView(message: (suggestion.words ?? "") + (value.value ? "on" : "off"), viewModel: viewModel)
-//                //
-//                //          case .title(let title):
-//                //            W3WPanelMessageView(message: title.value.asString(), viewModel: viewModel)
-//
-//              default:
-//                Text("?")
-//            }

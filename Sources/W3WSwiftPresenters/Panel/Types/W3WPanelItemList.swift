@@ -8,8 +8,12 @@
 import Foundation
 
 
-
 public struct W3WOrderedItem<T> {
+  public enum Kind {
+    case normal
+    case header
+    case footer
+  }
   
   let id = UUID()
   
@@ -17,13 +21,13 @@ public struct W3WOrderedItem<T> {
   
   let order: Float
   
-  let footer: Bool
+  let kind: Kind
   
   
-  public init(item: T, order: Float, footer: Bool = false) {
+  public init(item: T, order: Float, kind: Kind = .normal) {
     self.item = item
     self.order = order
-    self.footer = footer
+    self.kind = kind
   }
 }
 
@@ -33,17 +37,14 @@ public class W3WPanelItemList {
   var items: [W3WOrderedItem<W3WPanelItem>]
   
   public var list: [W3WPanelItem] {
-    get {
-      return items.sorted(by: { i, j in i.order < j.order }).map { i in return i.item }
-    }
+    items.sorted(by: { i, j in i.order < j.order }).map { i in return i.item }
   }
   
-  public var listNoFooters: [W3WPanelItem] {
-    get {
-      return items.sorted(by: { i, j in i.order < j.order }).filter({ i in return !i.footer }).map { i in return i.item }
-    }
+  public var listNormal: [W3WPanelItem] {
+    items.sorted(by: { i, j in i.order < j.order })
+      .filter({ $0.kind == .normal })
+      .map { i in return i.item }
   }
-
   
   public init(items: [W3WOrderedItem<W3WPanelItem>]) {
     self.items = items
@@ -58,12 +59,12 @@ public class W3WPanelItemList {
   public func highestOrder() -> Float {
     return items.max(by: { i, j in i.order < j.order })?.order ?? 1.0
   }
-
+  
   
   public func newLowOrder() -> Float {
     return lowestOrder() - 1.0
   }
-
+  
   
   public func newHighOrder() -> Float {
     return highestOrder() + 1.0
@@ -90,23 +91,34 @@ public class W3WPanelItemList {
   }
   
   
-  public func isFooter(index: Int) -> Bool {
-    return items[index].footer
+  public func getHeader() -> W3WPanelItem? {
+    items.first(where: { $0.kind == .header })?.item
   }
   
   
   public func getFooter() -> W3WPanelItem? {
-    items.first(where: { i in i.footer == true })?.item
+    items.first(where: { $0.kind == .footer })?.item
+  }
+  
+  public func set(header: W3WPanelItem?) {
+    if let header {
+      items.append(W3WOrderedItem(item: header, order: newHighOrder(), kind: .header))
+    } else {
+      items.removeAll(where: { $0.kind == .header })
+    }
+  }
+  
+  public func removeAll(type: W3WOrderedItem<W3WPanelItem>.Kind) {
+    items.removeAll(where: { $0.kind == type })
   }
   
   
   public func set(footer: W3WPanelItem?) {
-    if let f = footer {
-      items.append(W3WOrderedItem(item: f, order: newLowOrder(), footer: true))
-      
+    if let footer {
+      items.append(W3WOrderedItem(item: footer, order: newLowOrder(), kind: .footer))
     } else {
-      items.removeAll(where: { i in i.footer == true })
+      items.removeAll(where: { $0.kind == .footer })
     }
   }
-
+  
 }

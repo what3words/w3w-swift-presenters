@@ -11,97 +11,62 @@ import W3WSwiftCore
 import W3WSwiftThemes
 import W3WSwiftDesign
 
-struct W3WPanelButtonsView<ViewModel: W3WPanelViewModelProtocol>: View {
-  @State private var cancellable: AnyCancellable?
+struct W3WPanelButtonsView: View {
 
-  var buttons: [W3WButtonData]
-  
-  var text: W3WLive<W3WString>
-  
-  @State var liveText = W3WString()
+  @State var buttons: [W3WButtonData]
 
-  // view model
-  @ObservedObject var viewModel: ViewModel
+  @State var theme: W3WTheme?
 
   var body: some View {
-    //ScrollView(.horizontal, showsIndicators: false) {
-      HStack {
-        if liveText.asString() != "" {
-          W3WTextView(liveText)
-          Spacer()
-        }
-        
+    HStack {
+      ForEach(buttons) { button in
+        _Button(button: button, theme: theme)
+      }
+    }
+    .padding(.bottom, W3WPadding.light.value)
+    .padding(.horizontal, W3WPadding.bold.value)
+  }
+}
 
-        ForEach(buttons) { button in
-          if let title = button.title {
-            Button(action: { button.onTap() }, label: { Text(button.title ?? "") })
-              .padding(EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0))
-              .foregroundColor(W3WColor.darkBlue.suColor)
-              .background(W3WColor.lightBlue.suColor)  //(viewModel.scheme?.colors?.secondaryBackground?.current.suColor)
-              .clipShape(Capsule())
-          }
+private extension W3WPanelButtonsView {
+  struct _Button: View {
+    @ObservedObject var button: W3WButtonData
+    
+    @State var theme: W3WTheme?
+    
+    // Consider using a preference key to track the biggest width
+    private let minButtonWidth: CGFloat = 93
+    
+    var body: some View {
+      if let title = button.title {
+        //TODO: - (Kaley) Can replace this with W3WSUButton (?)
+        Button(action: button.onTap) {
+          Text(title)
+            .padding(.vertical, W3WPadding.extraMedium.value)
+            .padding(.horizontal, W3WPadding.bold.value)
+            .frame(minWidth: minButtonWidth)
+            .foregroundColor(theme?.labelsSecondary?.suColor)
+            .background(
+              button.highlight == .primary
+              ? theme?.fillsQuaternary?.suColor
+              : theme?.fillsSenary?.suColor
+            )
+            .clipShape(.rect(cornerRadius: buttonCornerRadius))
         }
       }
-    //}
-    .padding()
-    
-    .onAppear { // Subscribe to the text changes
-      //if let t = text {
-        cancellable = text
-          .sink { content in
-            liveText = text.value
-          }
-      //}
     }
-    .onDisappear {
-      // Cancel the subscription
-      cancellable?.cancel()
+    
+    private var buttonCornerRadius: CGFloat {
+      W3WPadding.light.value
     }
   }
 }
 
-
-
 #Preview {
   W3WPanelButtonsView(
     buttons: [
-      W3WButtonData(icon: .badge, title: "title", onTap: { }),
-      W3WButtonData(icon: .camera, title: "title", onTap: { }),
-//      W3WButtonData(icon: .gearshape, title: "title", onTap: { }),
-//      W3WButtonData(icon: .badgeFill, title: "title", onTap: { })
-    ],
-    text: W3WLive<W3WString>(W3WString("1 selected")),
-    viewModel: W3WPanelViewModel()
-  )
+      W3WButtonData(icon: .badge, title: "titleA", onTap: { }),
+      W3WButtonData(icon: .gearshape, title: "titleB", highlight: .secondary, onTap: { }),
+      W3WButtonData(icon: .camera, title: "titleC", onTap: { }),
+    ])
 }
-
-
-
-//ScrollView(.horizontal, showsIndicators: false) {
-//  HStack { // Add some spacing between buttons
-//    if let text = text?.value {
-//      W3WTextView(text)
-//    }
-//    ForEach(buttons) { button in
-//      if let title = button.title {
-//        Button(action: { button.onTap() }, label: {
-//          HStack {
-//            if let icon = button.icon {
-//              Image(uiImage: icon.get())
-//            }
-//            if let t = button.title {
-//              Text(t)
-//            }
-//          }.padding(EdgeInsets(top: 10.0, leading: 16.0, bottom: 10.0, trailing: 16.0))
-//        }
-//        )
-//        .foregroundColor(W3WColor.darkBlue.suColor)
-//        .background(W3WColor.lightBlue.suColor)  //(viewModel.scheme?.colors?.secondaryBackground?.current.suColor)
-//        .clipShape(Capsule())
-//      }
-//    }
-//  }
-//  .background(Color.gray)
-//  .frame(maxWidth: .infinity) // Allow the HStack to expand to the full width of the ScrollView
-//  .padding()
-//}

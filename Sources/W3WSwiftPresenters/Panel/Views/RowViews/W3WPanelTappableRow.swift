@@ -16,6 +16,7 @@ struct W3WPanelTappableRow: View {
 
   var icon: W3WImage
   var text: W3WLive<W3WString>
+  @State var scheme: W3WScheme?
 
   @State var liveText = NSAttributedString()
 

@@ -13,27 +13,26 @@ struct W3WPanelHeadingView<ViewModel: W3WPanelViewModelProtocol>: View {
   
   var title: W3WString
 
-  var scheme: W3WScheme? = .w3w
+  @State var theme: W3WTheme?
 
   // view model
   @ObservedObject var viewModel: ViewModel
 
   var body: some View {
     HStack {
-      W3WTextView(title, separator: false)
-        .foregroundColor(scheme?.colors?.foreground?.suColor)
-        .background(scheme?.colors?.background?.suColor)
-        .padding(W3WPadding.medium.value)
+      Spacer()
+      Text(title.asString())
+        .scheme(textScheme)
+      .multilineTextAlignment(.center)
+      .frame(alignment: .center)
+      .padding(W3WPadding.medium.value)
       Spacer()
     }
     .frame(maxWidth: .infinity, alignment: .leading)
-    .background(scheme?.colors?.secondaryBackground?.suColor)
-    .listRowBackground(scheme?.colors?.secondaryBackground?.suColor)
     .animation(.easeInOut(duration: 0.1))
   }
+  
+  var textScheme: W3WScheme? {
+    theme?.labelScheme(grade: .tertiary, fontStyle: .body, weight: .bold)
+  }
 }
-
-
-//#Preview {
-//    SwiftUIView()
-//}

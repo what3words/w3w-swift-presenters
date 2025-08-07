@@ -14,26 +14,32 @@ import W3WSwiftThemes
 struct W3WPanelSuggestionsView: View {
   @State private var cancellable: AnyCancellable?
 
-  var suggestions: W3WSelectableSuggestions
+  @ObservedObject var suggestions: W3WSelectableSuggestions
   
+  @State var theme: W3WTheme?
+
+  @State var language: W3WLanguage?
+  
+  let translations: W3WTranslationsProtocol?
+
   @State private var refresh = false
   
   
   var body: some View {
-//    suggestions.update = {
-//      W3WThread.queueOnMain {
-//        refresh.toggle()
-//      }
-//    }
-//
-//    return
     ScrollView {
       if refresh == true || refresh == false { }
-      ForEach(suggestions.suggestions) { selectableSuggestion in
-        HStack {
-          W3WPanelSuggestionView(suggestion: selectableSuggestion, scheme: .standard) {
+      VStack(spacing: 0) {
+        ForEach(suggestions.suggestions) { selectableSuggestion in
+          W3WPanelSuggestionView(
+            suggestion: selectableSuggestion,
+            language: language,
+            translations: translations,
+            showDivider: selectableSuggestion.id != suggestions.suggestions.last?.id,
+            theme: theme) {
             if let s = selectableSuggestion.selected.value {
               selectableSuggestion.selected.send(!s)
+            } else {
+              suggestions.singleSelection(selectableSuggestion.suggestion)
             }
           }
         }
@@ -67,5 +73,5 @@ struct W3WPanelSuggestionsView: View {
   suggestions.add(suggestion: s3, selected: false)
   suggestions.add(suggestion: s4, selected: true)
 
-  return W3WPanelSuggestionsView(suggestions: suggestions)
+  return W3WPanelSuggestionsView(suggestions: suggestions, translations: nil)
 }
