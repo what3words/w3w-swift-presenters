@@ -231,11 +231,11 @@ private extension W3WPanelViewModel {
   
   /// Toggles the single selection mode on and off.
   /// Resets all selections when toggling.
-  /// Sends `.selectAllItems` event with the updated state.
+  /// Sends `.setSelectionMode` event with the updated state.
   func toggleSingleSelectionMode() {
     selectionMode = selectionMode == .single ? .none : .single
     selections.removeAll()
-    output.send(.selectAllItems(selectionMode == .single))
+    output.send(.setSelectionMode(selectionMode == .single))
   }
   
   /// Toggles the "Select All" mode.
