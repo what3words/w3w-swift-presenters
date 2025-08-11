@@ -280,8 +280,9 @@ private extension W3WPanelViewModel {
     }
     
     func makeItems(_ buttons: [W3WButtonData]) -> [W3WPanelItem] {
-      let text = translations.get(id: "ocr_w3wa_selected_number")
-      return [.buttonsAndTitle(buttons, text: text, highlightedText: "\(selections.count)")]
+      let count = "\(selections.count)"
+      let text = count + " " + translations.get(id: "ocr_w3wa_selected_number")
+      return [.buttonsAndTitle(buttons, text: text, highlightedText: count)]
     }
     
     switch selections.count {
