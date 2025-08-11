@@ -8,7 +8,7 @@
 import Foundation
 import W3WSwiftCore
 
-
+@available(*, deprecated, message: "No longer needed in new bottom sheet logic")
 public class W3WSelectableSuggestion: Identifiable, ObservableObject {
   public var id: UUID
   let suggestion: W3WSuggestion

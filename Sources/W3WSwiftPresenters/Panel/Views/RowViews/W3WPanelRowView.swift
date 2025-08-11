@@ -22,13 +22,7 @@ struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
       W3WPanelTitleView(title: title, theme: viewModel.theme)
       
     case .heading(let text):
-      W3WPanelHeadingView(title: text.value, theme: viewModel.theme, viewModel: viewModel)
-      
-    case .message(let message):
-      W3WPanelMessageView(message: message, theme: viewModel.theme, viewModel: viewModel)
-      
-    case .actionItem(icon: let icon, text: let text, let button):
-      W3WPanelActionItemView(icon: icon, text: text, button: button, theme: viewModel.theme)
+      W3WPanelHeadingView(title: text, theme: viewModel.theme)
       
     case .button(let button):
       W3WPanelPrimaryActionView(button: button, theme: viewModel.theme)
@@ -40,13 +34,15 @@ struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
       W3WPanelButtonsAndTitleView(buttons: buttons, text: text, highlightedText: highlightedText, theme: viewModel.theme)
       
     case .suggestions(let suggestions):
-      W3WPanelSuggestionsView(suggestions: suggestions,
-                              theme: viewModel.theme,
-                              language: viewModel.language,
-                              translations: viewModel.translations)
-      
-    default:
-      Text("?")
+      W3WPanelSuggestionsView(
+        suggestions: suggestions,
+        isSelectable: viewModel.isSelectable,
+        isSelected: viewModel.isSelected,
+        toggleSelection: viewModel.toggleSelection,
+        viewSelection: viewModel.viewSelection,
+        theme: viewModel.theme,
+        language: viewModel.language,
+        translations: viewModel.translations)
     }
   }
 }

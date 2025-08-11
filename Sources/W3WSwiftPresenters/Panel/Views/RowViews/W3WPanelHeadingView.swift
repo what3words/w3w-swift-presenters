@@ -9,19 +9,16 @@ import SwiftUI
 import W3WSwiftThemes
 
 
-struct W3WPanelHeadingView<ViewModel: W3WPanelViewModelProtocol>: View {
+struct W3WPanelHeadingView: View {
   
-  var title: W3WString
+  let title: String
 
   @State var theme: W3WTheme?
-
-  // view model
-  @ObservedObject var viewModel: ViewModel
 
   var body: some View {
     HStack {
       Spacer()
-      Text(title.asString())
+      Text(title)
         .scheme(textScheme)
       .multilineTextAlignment(.center)
       .frame(alignment: .center)

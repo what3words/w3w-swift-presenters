@@ -6,58 +6,51 @@
 //
 
 import SwiftUI
-import Combine
 import W3WSwiftCore
 import W3WSwiftThemes
 
 
 struct W3WPanelSuggestionsView: View {
-  @State private var cancellable: AnyCancellable?
 
-  @ObservedObject var suggestions: W3WSelectableSuggestions
+  let suggestions: [W3WSuggestion]
+  
+  let isSelectable: Bool
+  
+  let isSelected: (W3WSuggestion) -> Bool
+  
+  let toggleSelection: (W3WSuggestion) -> Void
+  
+  let viewSelection: (W3WSuggestion) -> Void
   
   @State var theme: W3WTheme?
 
   @State var language: W3WLanguage?
   
   let translations: W3WTranslationsProtocol?
-
-  @State private var refresh = false
   
   
   var body: some View {
     ScrollView {
-      if refresh == true || refresh == false { }
       VStack(spacing: 0) {
-        ForEach(suggestions.suggestions) { selectableSuggestion in
+        ForEach(suggestions, id: \.words) { suggestion in
           W3WPanelSuggestionView(
-            suggestion: selectableSuggestion,
+            suggestion: suggestion,
             language: language,
             translations: translations,
-            showDivider: selectableSuggestion.id != suggestions.suggestions.last?.id,
+            isSelectable: isSelectable,
+            isSelected: isSelected(suggestion),
+            showDivider: suggestion.words != suggestions.last?.words,
             theme: theme) {
-            if let s = selectableSuggestion.selected.value {
-              selectableSuggestion.selected.send(!s)
-            } else {
-              suggestions.singleSelection(selectableSuggestion.suggestion)
-            }
+              if isSelectable {
+                toggleSelection(suggestion)
+              } else {
+                viewSelection(suggestion)
+              }
           }
         }
       }
     }
-    
-    // Subscribe to suggestions.update
-    .onAppear {
-      cancellable = suggestions.update.sink { content in
-        refresh.toggle()
-      }
-    }
-    .onDisappear { // Cancel the subscription when the view disappears
-      cancellable?.cancel()
-    }
-
   }
-  
 }
 
 
@@ -67,11 +60,11 @@ struct W3WPanelSuggestionsView: View {
   let s3 = W3WBaseSuggestion(words: "zz.zz.zz", country: W3WBaseCountry(code: "ZZ"), nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
   let s4 = W3WBaseSuggestion(words: "reallyreally.longverylong.threewordaddress", nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
   
-  var suggestions = W3WSelectableSuggestions()
-  suggestions.add(suggestion: s1, selected: false)
-  suggestions.add(suggestion: s2)
-  suggestions.add(suggestion: s3, selected: false)
-  suggestions.add(suggestion: s4, selected: true)
-
-  return W3WPanelSuggestionsView(suggestions: suggestions, translations: nil)
+  W3WPanelSuggestionsView(
+    suggestions: [s1, s2, s3, s4],
+    isSelectable: true,
+    isSelected: { _ in false },
+    toggleSelection: { _ in },
+    viewSelection: { _ in },
+    translations: nil)
 }
