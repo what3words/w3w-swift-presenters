@@ -99,9 +99,9 @@ struct W3WPanelViewModelTests {
     [0, 1], // Select 1st & 2nd suggestions
     [0, 1, 0] // Select 1st & 2nd suggestions then deselect 1st
   ], [
-    (3, "1"), // 3 visible buttons, 1 selection
-    (2, "2"), // 2 visible buttons, 2 selection
-    (3, "1") // 3 visible buttons, 1 selection
+    (3, "1"), // 3 visible buttons, 1 selected
+    (2, "2"), // 2 visible buttons, 2 selected
+    (3, "1") // 3 visible buttons, 1 selected
   ]))
   func togglesSuggestions(
     suggestionIndice: [Int],
@@ -197,8 +197,8 @@ struct W3WPanelViewModelTests {
     [0], // Deselect 1st suggestion
     [0, 1], // Deselect 1st & 2nd suggestions
   ], [
-    2, // 2 visible buttons
-    3, // 2 visible buttons, 2 selection
+    2, // 2 visible buttons 2 selected
+    3, // 3 visible buttons, 1 selected
   ]))
   func selectAllThenManuallyDeselectSuggestions(
     suggestionIndice: [Int],
