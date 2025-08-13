@@ -76,7 +76,7 @@ struct W3WPanelViewModelTests {
     let header = try #require(viewModel.header?.first)
     switch header {
     case .heading: break // Expected
-    default: Issue.record("W3WPanelItem header is not buttons")
+    default: Issue.record("W3WPanelItem header is not heading")
     }
     #expect(viewModel.isSelectable == false)
     #expect(viewModel.footer == nil)
