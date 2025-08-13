@@ -12,21 +12,18 @@ import W3WSwiftThemes
 struct W3WPanelHeadingView: View {
   
   let title: String
-
-  @State var theme: W3WTheme?
+  
+  let isCentered: Bool
+  
+  let theme: W3WTheme?
 
   var body: some View {
-    HStack {
-      Spacer()
-      Text(title)
-        .scheme(textScheme)
+    Text(title)
+      .scheme(textScheme)
       .multilineTextAlignment(.center)
       .frame(alignment: .center)
       .padding(W3WPadding.medium.value)
-      Spacer()
-    }
-    .frame(maxWidth: .infinity, alignment: .leading)
-    .animation(.easeInOut(duration: 0.1))
+      .frame(maxWidth: .infinity, alignment: isCentered ? .center : .leading)
   }
   
   var textScheme: W3WScheme? {

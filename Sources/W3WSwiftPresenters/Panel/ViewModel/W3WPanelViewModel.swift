@@ -213,20 +213,23 @@ private extension W3WPanelViewModel {
     return [heading, tryAgain]
   }
   
-  /// Returns the header with "Select" and "Select All" buttons for pro users.
-  /// Only shown if `isProUser` is `true`.
+  /// Returns the header for the panel:
+  /// - For pro users (`isProUser == true`): shows "Select" and "Select All" buttons.
+  /// - For non-pro users: shows a "scan_state_found" heading.
   var selectionHeader: [W3WPanelItem]? {
-    guard isProUser else { return nil }
-    
-    let select = W3WButtonData(
-      title: translations.get(id: "ocr_selectButton"),
-      highlight: selectionMode == .single ? .primary : .secondary,
-      onTap: toggleSingleSelectionMode)
-    let selectAll = W3WButtonData(
-      title: translations.get(id: "ocr_select_allButton"),
-      highlight: selectionMode == .all ? .primary : .secondary,
-      onTap: toggleAllSelectionMode)
-    return [.buttons([select, selectAll])]
+    if isProUser {
+      let select = W3WButtonData(
+        title: translations.get(id: "ocr_selectButton"),
+        highlight: selectionMode == .single ? .primary : .secondary,
+        onTap: toggleSingleSelectionMode)
+      let selectAll = W3WButtonData(
+        title: translations.get(id: "ocr_select_allButton"),
+        highlight: selectionMode == .all ? .primary : .secondary,
+        onTap: toggleAllSelectionMode)
+      return [.buttons([select, selectAll])]
+    } else {
+      return [.heading(translations.get(id: "scan_state_found"), isCentered: false)]
+    }
   }
   
   /// Toggles the single selection mode on and off.

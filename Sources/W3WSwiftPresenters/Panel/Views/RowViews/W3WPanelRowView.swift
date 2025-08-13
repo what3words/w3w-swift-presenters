@@ -21,8 +21,8 @@ struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
     case .title(let title):
       W3WPanelTitleView(title: title, theme: viewModel.theme)
       
-    case .heading(let text):
-      W3WPanelHeadingView(title: text, theme: viewModel.theme)
+    case let .heading(text, isCentered):
+      W3WPanelHeadingView(title: text, isCentered: isCentered, theme: viewModel.theme)
       
     case .button(let button):
       W3WPanelPrimaryActionView(button: button, theme: viewModel.theme)

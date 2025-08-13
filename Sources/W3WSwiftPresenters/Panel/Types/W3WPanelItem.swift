@@ -16,7 +16,7 @@ public enum W3WPanelItem: Identifiable {
   case buttonsAndTitle([W3WButtonData], text: String, highlightedText: String?)
   case suggestions([W3WSuggestion])
   case title(String)
-  case heading(String)
+  case heading(String, isCentered: Bool = true)
 
   public var id: String {
     switch self {
@@ -35,7 +35,7 @@ public enum W3WPanelItem: Identifiable {
     case .title(let text):
       return text
       
-    case .heading(let text):
+    case .heading(let text, _):
       return text
     }
   }
