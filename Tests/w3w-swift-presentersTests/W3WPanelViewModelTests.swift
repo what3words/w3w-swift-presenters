@@ -44,7 +44,7 @@ struct W3WPanelViewModelTests {
     #expect(viewModel.footer == nil)
   }
   
-  @Test func addSuggestions() async throws {
+  @Test func addSuggestionsAsProUser() async throws {
     // Given
     let viewModel = makeViewModel()
     
@@ -59,6 +59,23 @@ struct W3WPanelViewModelTests {
       #expect(buttonData[0].highlight == .secondary)
       #expect(buttonData[1].highlight == .secondary)
       
+    default: Issue.record("W3WPanelItem header is not buttons")
+    }
+    #expect(viewModel.isSelectable == false)
+    #expect(viewModel.footer == nil)
+  }
+  
+  @Test func addSuggestionsAsFreeUser() async throws {
+    // Given
+    let viewModel = makeViewModel(mode: .singleShot, isProUser: false)
+    
+    // When
+    viewModel.add(suggestions: sampleSuggestions)
+    
+    // Then
+    let header = try #require(viewModel.header?.first)
+    switch header {
+    case .heading: break // Expected
     default: Issue.record("W3WPanelItem header is not buttons")
     }
     #expect(viewModel.isSelectable == false)
@@ -240,8 +257,8 @@ struct W3WPanelViewModelTests {
 
 // MARK: - Helpers
 private extension W3WPanelViewModelTests {
-  func makeViewModel(mode: W3WPanelViewModel.Mode = .live) -> W3WPanelViewModel {
-    W3WPanelViewModel(mode: mode, isProUser: .init(true), theme: nil, language: nil, translations: translations)
+  func makeViewModel(mode: W3WPanelViewModel.Mode = .live, isProUser: Bool = true) -> W3WPanelViewModel {
+    W3WPanelViewModel(mode: mode, isProUser: .init(isProUser), theme: nil, language: nil, translations: translations)
   }
   
   func makeViewModelThenAddSuggestions(
