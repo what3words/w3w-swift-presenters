@@ -9,20 +9,18 @@ import Foundation
 import W3WSwiftThemes
 
 
-public class W3WButtonData: Identifiable, ObservableObject {
-  public var id = UUID()
+public struct W3WButtonData: Identifiable {
+  public let id = UUID()
   
   public var icon: W3WImage?
   public var title: String?
-  @Published public var highlight: W3WOrdinal
+  public var highlight: W3WOrdinal
   public var onTap: () -> ()
   
   public init(icon: W3WImage? = nil, title: String? = nil, highlight: W3WOrdinal = .primary, onTap: @escaping () -> Void) {
-    self.id = UUID()
     self.icon = icon
     self.title = title
     self.onTap = onTap
     self.highlight = highlight
   }
-  
 }

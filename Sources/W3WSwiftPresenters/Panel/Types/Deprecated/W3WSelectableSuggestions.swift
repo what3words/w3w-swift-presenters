@@ -9,7 +9,7 @@ import Combine
 import SwiftUI
 import W3WSwiftCore
 
-
+@available(*, deprecated, message: "No longer needed in new bottom sheet logic")
 public class W3WSelectableSuggestions: W3WEventSubscriberProtocol, ObservableObject {
   public var subscriptions = W3WEventsSubscriptions()
   

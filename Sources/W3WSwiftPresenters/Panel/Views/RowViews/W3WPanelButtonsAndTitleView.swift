@@ -6,34 +6,29 @@
 //
 
 import SwiftUI
-import Combine
 import W3WSwiftCore
 import W3WSwiftThemes
 import W3WSwiftDesign
 import W3WSwiftDesignSwiftUI
 
 struct W3WPanelButtonsAndTitleView: View {
-  @State private var cancellables = Set<AnyCancellable>()
-  var buttons: [W3WButtonData]
-  var text: W3WLive<W3WString>
-  var highlightedText: W3WLive<W3WString>?
-  @State private var liveText = W3WString()
-  @State private var liveHighlightedText = W3WString()
+  let buttons: [W3WButtonData]
+  let text: String
+  let highlightedText: String?
   
   @State var theme: W3WTheme?
   
   var body: some View {
     HStack(spacing: W3WPadding.none.value) {
-      if liveText.asString() != "" {
-        W3WHighlightedText(text: liveText.asString(),
-                        color: textScheme?.colors?.foreground?.suColor,
-                        font: textScheme?.styles?.font,
-                        highlightedText: liveHighlightedText.asString(),
-                        highlightedTextColor: highlightedTextScheme?.colors?.foreground?.suColor,
-                        highlightedTextFont: highlightedTextScheme?.styles?.font
-        )
-        Spacer()
-      }
+      W3WHighlightedText(
+        text: text,
+        color: textScheme?.colors?.foreground?.suColor,
+        font: textScheme?.styles?.font,
+        highlightedText: highlightedText,
+        highlightedTextColor: highlightedTextScheme?.colors?.foreground?.suColor,
+        highlightedTextFont: highlightedTextScheme?.styles?.font
+      )
+      Spacer()
       HStack {
         ForEach(buttons) { button in
           if let title = button.title {
@@ -62,17 +57,6 @@ struct W3WPanelButtonsAndTitleView: View {
     .padding(.bottom, W3WPadding.light.value)
     .padding(.horizontal, W3WPadding.bold.value)
     .background(theme?.systemBackgroundBasePrimary?.suColor)
-    .onAppear { // Subscribe to the text changes
-      text.sink { content in
-        liveText = content
-      }
-      .store(in: &cancellables)
-      
-      highlightedText?.sink(receiveValue: { content in
-        liveHighlightedText = content
-      })
-      .store(in: &cancellables)
-    }
   }
 }
 
@@ -103,5 +87,6 @@ extension W3WPanelButtonsAndTitleView {
       W3WButtonData(icon: .gearshape, title: "titleB", highlight: .secondary, onTap: { }),
       W3WButtonData(icon: .camera, title: "titleC", onTap: { }),
     ],
-    text: W3WLive<W3WString>(W3WString("1 selected")))
+    text: "1 selected",
+    highlightedText: nil)
 }

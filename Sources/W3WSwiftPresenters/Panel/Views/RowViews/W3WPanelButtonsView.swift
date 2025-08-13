@@ -13,52 +13,36 @@ import W3WSwiftDesign
 
 struct W3WPanelButtonsView: View {
 
-  @State var buttons: [W3WButtonData]
+  let buttons: [W3WButtonData]
 
   @State var theme: W3WTheme?
 
+  // Consider using a preference key to track the biggest width
+  private let minButtonWidth: CGFloat = 93
+  
   var body: some View {
     HStack {
       ForEach(buttons) { button in
-        _Button(button: button, theme: theme)
+        if let title = button.title {
+          //TODO: - (Kaley) Can replace this with W3WSUButton (?)
+          Button(action: button.onTap) {
+            Text(title)
+              .padding(.vertical, W3WPadding.extraMedium.value)
+              .padding(.horizontal, W3WPadding.bold.value)
+              .frame(minWidth: minButtonWidth)
+              .foregroundColor(theme?.labelsSecondary?.suColor)
+              .background(
+                button.highlight == .primary
+                ? theme?.fillsQuaternary?.suColor
+                : theme?.fillsSenary?.suColor
+              )
+              .clipShape(.rect(cornerRadius: W3WPadding.light.value))
+          }
+        }
       }
     }
     .padding(.bottom, W3WPadding.light.value)
     .padding(.horizontal, W3WPadding.bold.value)
-  }
-}
-
-private extension W3WPanelButtonsView {
-  struct _Button: View {
-    @ObservedObject var button: W3WButtonData
-    
-    @State var theme: W3WTheme?
-    
-    // Consider using a preference key to track the biggest width
-    private let minButtonWidth: CGFloat = 93
-    
-    var body: some View {
-      if let title = button.title {
-        //TODO: - (Kaley) Can replace this with W3WSUButton (?)
-        Button(action: button.onTap) {
-          Text(title)
-            .padding(.vertical, W3WPadding.extraMedium.value)
-            .padding(.horizontal, W3WPadding.bold.value)
-            .frame(minWidth: minButtonWidth)
-            .foregroundColor(theme?.labelsSecondary?.suColor)
-            .background(
-              button.highlight == .primary
-              ? theme?.fillsQuaternary?.suColor
-              : theme?.fillsSenary?.suColor
-            )
-            .clipShape(.rect(cornerRadius: buttonCornerRadius))
-        }
-      }
-    }
-    
-    private var buttonCornerRadius: CGFloat {
-      W3WPadding.light.value
-    }
   }
 }
 
