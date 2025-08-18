@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 import W3WSwiftCore
 import W3WSwiftThemes
 
@@ -13,8 +14,25 @@ import W3WSwiftThemes
 /// A panel view that contains list items
 public protocol W3WPanelViewModelProtocol: ObservableObject {
   
-  /// the items in the list
-  var items: W3WPanelItemList { get set }
+  var header: [W3WPanelItem]? { get }
+  
+  var content: [W3WPanelItem] { get }
+
+  var footer: [W3WPanelItem]? { get }
+  
+  var isSelectable: Bool { get }
+  
+  var hasSuggestions: AnyPublisher<Bool, Never> { get }
+  
+  func add(suggestions: [W3WSuggestion])
+  
+  func toggleSelection(_ suggestion: W3WSuggestion)
+  
+  func isSelected(_ suggestion: W3WSuggestion) -> Bool
+  
+  func viewSelection(_ suggestion: W3WSuggestion)
+  
+  func reset()
   
   /// input events
   var input: W3WEvent<W3WPanelInputEvent> { get set }
@@ -26,5 +44,5 @@ public protocol W3WPanelViewModelProtocol: ObservableObject {
   
   var language: W3WLanguage? { get set }
   
-  var translations: W3WTranslationsProtocol? { get set }
+  var translations: W3WTranslationsProtocol { get }
 }

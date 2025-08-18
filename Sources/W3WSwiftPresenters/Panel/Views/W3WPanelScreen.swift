@@ -19,36 +19,27 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
   
   public var body: some View {
     VStack(spacing: 0) {
-      header
-      ScrollView {
-        ForEach(viewModel.items.listNormal, id: \.id) { item in
-          W3WPanelRowView(viewModel: viewModel, item: item)
+      if let header = viewModel.header {
+        rows(header)
+      }
+      if !viewModel.content.isEmpty {
+        ScrollView {
+          rows(viewModel.content)
         }
       }
-      footer
+      if let footer = viewModel.footer {
+        VStack {
+          Divider().shadow(radius: 1, x: 0, y: 1)
+          rows(footer)
+        }
+      }
     }
     .background(viewModel.theme?.systemBackgroundBasePrimary?.suColor)
   }
-  
-  @ViewBuilder
-  private var header: some View {
-    if let header = viewModel.items.getHeader() {
-      W3WPanelRowView(
-        viewModel: viewModel,
-        item: header
-      )
-    }
-  }
-  
-  @ViewBuilder
-  private var footer: some View {
-    if let _ = viewModel.items.getFooter() {
-      VStack {
-        Divider()
-          .shadow(radius: 1, x: 0, y: 1)
-        W3WPanelRowView(viewModel: viewModel, item: viewModel.items.list[0])
-      }
-      .padding(.top, 16)
+    
+  private func rows(_ items: [W3WPanelItem]) -> some View {
+    ForEach(items) { item in
+      W3WPanelRowView(viewModel: viewModel, item: item)
     }
   }
 }
@@ -59,7 +50,13 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
   let s3 = W3WBaseSuggestion(words: "zz.zz.zz", country: W3WBaseCountry(code: "ZZ"), nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
   let s4 = W3WBaseSuggestion(words: "reallyreally.longverylong.threewordaddress", nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
 
-  var items = W3WPanelViewModel(theme: nil, language: W3WLive<W3WLanguage?>(W3WBaseLanguage(locale: "en")), translations: nil)
+  let items = W3WPanelViewModel(
+    mode: .live,
+    isProUser: .init(true),
+    theme: nil,
+    language: W3WLive<W3WLanguage?>(W3WBaseLanguage(locale: "en")),
+    translations: W3WMockTranslation()
+  )
 
   W3WPanelScreen(viewModel: items)
 }

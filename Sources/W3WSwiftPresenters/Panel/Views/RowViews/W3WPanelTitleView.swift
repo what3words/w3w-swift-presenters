@@ -7,7 +7,7 @@
 
 import SwiftUI
 import W3WSwiftThemes
-
+import W3WSwiftDesignSwiftUI
 
 struct W3WPanelTitleView: View {
   
