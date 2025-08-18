@@ -17,12 +17,12 @@ public struct W3WSuBottomSheet<Content: View>: View {
 
   @State public var height: CGFloat
 
-  @State public var detents = W3WDetents(detent: 64.0)
+  private let detents: W3WDetents
 
   @ViewBuilder public let content: Content
 
   
-  public init(scheme: W3WScheme?, height: CGFloat, detents: W3WDetents = W3WDetents(detent: 64.0), @ViewBuilder content: () -> Content) {
+  public init(scheme: W3WScheme?, height: CGFloat, detents: W3WDetents = W3WDetents(detents: [64.0]), @ViewBuilder content: () -> Content) {
     self.scheme = scheme
     self.height = height
     self.detents = detents
