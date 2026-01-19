@@ -18,7 +18,7 @@ let package = Package(
       .package(url: "https://github.com/what3words/w3w-swift-core.git", "1.0.0" ..< "2.0.0"),
       .package(url: "https://github.com/what3words/w3w-swift-themes.git", "1.0.0" ..< "2.0.0"),
       .package(url: "https://github.com/what3words/w3w-swift-design.git", "1.0.0" ..< "2.0.0"),
-      .package(url: "git@github.com:what3words/w3w-swift-design-swiftui.git", "1.0.0" ..< "2.0.0")
+      .package(url: "git@github.com:what3words/w3w-swift-design-swiftui.git", branch: "dev/v5.4.0")
     ],
     
     targets: [
