@@ -8,8 +8,7 @@
 import UIKit
 import MobileCoreServices
 import UniformTypeIdentifiers
-
-
+import Photos
 
 public class W3WImagePickerViewController: UIImagePickerController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
@@ -54,7 +53,11 @@ public class W3WImagePickerViewController: UIImagePickerController, UIImagePicke
       let image = info[.originalImage] as? UIImage,
       let cgImage = image.cgImage else { return }
     hasPickedImage = true
-    viewModel?.output.send(.image(cgImage))
+    if let asset = info[.phAsset] as? PHAsset {
+      viewModel?.output.send(.imageAndAsset(cgImage, asset))
+    } else {
+      viewModel?.output.send(.image(cgImage))
+    }
   }
 
   
