@@ -1,5 +1,5 @@
 {
-  "originHash" : "f09aba5e28f3c606eafe41e4d7610a8adfdad5906227ef998e6d4f666c6abdaf",
+  "originHash" : "9f08de626cf02f8abe37ab69994dd020b43cf4885a88e8753d40fbb7cff6a3f0",
   "pins" : [
     {
       "identity" : "w3w-swift-core",
@@ -24,8 +24,8 @@
       "kind" : "remoteSourceControl",
       "location" : "git@github.com:what3words/w3w-swift-design-swiftui.git",
       "state" : {
-        "branch" : "dev/v5.4.0",
-        "revision" : "d8392250e8b4ba30fb44301f5a46b5b985bde8b2"
+        "branch" : "dev/v5.6.0",
+        "revision" : "cfab6fefc5b39d5437937c18ec3d7e137d2c8ae8"
       }
     },
     {
