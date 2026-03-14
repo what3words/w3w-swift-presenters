@@ -1,13 +1,13 @@
 {
-  "originHash" : "9f08de626cf02f8abe37ab69994dd020b43cf4885a88e8753d40fbb7cff6a3f0",
+  "originHash" : "809d1cd4965c5210daf9a7d06954a9b7ba7bae76f122a2b08db52156caca25c5",
   "pins" : [
     {
       "identity" : "w3w-swift-core",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/what3words/w3w-swift-core.git",
       "state" : {
-        "revision" : "7fe8769bfbe105bcf3b05f42aeb8833673780ec1",
-        "version" : "1.1.4"
+        "branch" : "staging",
+        "revision" : "1e38676bf065d6c3411895fe2c47bab04c56bba0"
       }
     },
     {
@@ -15,14 +15,14 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/what3words/w3w-swift-design.git",
       "state" : {
-        "revision" : "2495f4f80c1a872264211ac937f71d15d8516490",
-        "version" : "1.1.0"
+        "branch" : "staging",
+        "revision" : "093a87c7998ae4833eaa0df9e44b80d6a52b19b7"
       }
     },
     {
       "identity" : "w3w-swift-design-swiftui",
       "kind" : "remoteSourceControl",
-      "location" : "git@github.com:what3words/w3w-swift-design-swiftui.git",
+      "location" : "https://github.com/what3words/w3w-swift-design-swiftui.git",
       "state" : {
         "branch" : "dev/v5.6.0",
         "revision" : "cfab6fefc5b39d5437937c18ec3d7e137d2c8ae8"
