@@ -1,5 +1,5 @@
 {
-  "originHash" : "809d1cd4965c5210daf9a7d06954a9b7ba7bae76f122a2b08db52156caca25c5",
+  "originHash" : "ca96af316a5f503eb4c5393a77a1cbfbd14f7eb6ff0eae4f5adab6a496c5b940",
   "pins" : [
     {
       "identity" : "w3w-swift-core",
@@ -33,8 +33,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/what3words/w3w-swift-themes.git",
       "state" : {
-        "revision" : "86035dcf1cf9ce5be7dc0a1a761fb5561b795b2c",
-        "version" : "1.3.0"
+        "branch" : "staging",
+        "revision" : "9371b0319c86a4432421f6c6100c2c2eb01740dc"
       }
     }
   ],
