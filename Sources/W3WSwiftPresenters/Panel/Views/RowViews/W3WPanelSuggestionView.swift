@@ -83,13 +83,7 @@ struct W3WPanelSuggestionView: View {
 // MARK: - Helpers
 private extension W3WPanelSuggestionView {
   var nearestPlace: String {
-    // currently, display 'near' keyword in English language only. Should improve later after we update our localisations for all languages
-    guard let placeName = suggestion.nearestPlace else { return "" }
-    if let language, language.code == "en", let translations {
-      let nearString = translations.get(id: "near")
-      return String(format: "%@ %@", nearString, placeName)
-    }
-    return placeName
+    return suggestion.nearestPlace ?? ""
   }
   
   
