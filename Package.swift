@@ -15,17 +15,16 @@ let package = Package(
     ],
     
     dependencies: [
-      .package(url: "https://github.com/what3words/w3w-swift-core.git", "1.0.0" ..< "2.0.0"),
-      .package(url: "https://github.com/what3words/w3w-swift-themes.git", "1.0.0" ..< "2.0.0"),
-      .package(url: "https://github.com/what3words/w3w-swift-design.git", "1.0.0" ..< "2.0.0"),
-      .package(url: "git@github.com:what3words/w3w-swift-design-swiftui.git", "1.0.0" ..< "2.0.0")
+      .package(url: "https://github.com/what3words/w3w-swift-core.git", "1.3.0"..<"2.0.0"),
+      .package(url: "https://github.com/what3words/w3w-swift-themes.git", "1.5.0"..<"2.0.0"),
+      .package(url: "https://github.com/what3words/w3w-swift-design.git", "1.3.0"..<"2.0.0"),
+      .package(url: "https://github.com/what3words/w3w-swift-design-swiftui.git", "1.5.0"..<"2.0.0"),
     ],
     
     targets: [
         .target(
           name: "W3WSwiftPresenters",
           dependencies: [
-            //.product(name: "W3WSwiftApi", package: "w3w-swift-wrapper"),
             .product(name: "W3WSwiftCore", package: "w3w-swift-core"),
             .product(name: "W3WSwiftThemes", package: "w3w-swift-themes"),
             .product(name: "W3WSwiftDesign", package: "w3w-swift-design"),

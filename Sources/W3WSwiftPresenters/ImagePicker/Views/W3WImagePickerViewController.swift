@@ -8,8 +8,8 @@
 import UIKit
 import MobileCoreServices
 import UniformTypeIdentifiers
-
-
+import Photos
+import W3WSwiftThemes
 
 public class W3WImagePickerViewController: UIImagePickerController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
@@ -50,16 +50,23 @@ public class W3WImagePickerViewController: UIImagePickerController, UIImagePicke
 
   
   public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-    guard
-      let image = info[.originalImage] as? UIImage,
-      let cgImage = image.cgImage else { return }
+    guard let image = info[.originalImage] as? UIImage else { return }
+    // The output event carries a `CGImage`, which has no orientation flag. If we forwarded
+    // `image.cgImage` directly, a portrait photo (EXIF `.right`) would arrive at consumers
+    // as raw sideways pixels and display rotated 90°. Bake the EXIF orientation into the
+    // pixel data first so the emitted `CGImage` is already upright.
+    guard let cgImage = image.normalizedOrientation().cgImage else { return }
     hasPickedImage = true
-    viewModel?.output.send(.image(cgImage))
+    if let asset = info[.phAsset] as? PHAsset {
+      viewModel?.output.send(.imageAndAsset(cgImage, asset))
+    } else {
+      viewModel?.output.send(.image(cgImage))
+    }
   }
 
-  
+
   public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
     viewModel?.output.send(.dismiss)
   }
-  
+
 }

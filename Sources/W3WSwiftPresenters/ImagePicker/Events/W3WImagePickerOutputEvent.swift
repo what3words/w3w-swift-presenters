@@ -7,11 +7,12 @@
 
 import CoreGraphics
 import W3WSwiftCore
-
+import Photos
 
 public enum W3WImagePickerOutputEvent {
   
   case image(CGImage)
+  case imageAndAsset(CGImage, PHAsset)
   case dismiss
   case error(W3WError)
   
