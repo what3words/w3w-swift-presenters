@@ -42,7 +42,7 @@ public protocol W3WPanelViewModelProtocol: ObservableObject {
   
   var theme: W3WTheme? { get set }
   
-  var language: W3WLanguage? { get set }
+  var rfcLanguage: (any W3WRfcLanguageProtocol)? { get set }
   
   var translations: W3WTranslationsProtocol { get }
 }

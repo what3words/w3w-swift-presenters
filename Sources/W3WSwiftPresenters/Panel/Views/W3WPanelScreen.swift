@@ -54,7 +54,7 @@ public struct W3WPanelScreen<ViewModel: W3WPanelViewModelProtocol>: View {
     mode: .live,
     isProUser: .init(true),
     theme: nil,
-    language: W3WLive<W3WLanguage?>(W3WBaseLanguage(locale: "en")),
+    rfcLanguage: W3WLive<(any W3WRfcLanguageProtocol)?>(W3WRfcLanguage(from: "en")),
     translations: W3WMockTranslation()
   )
 

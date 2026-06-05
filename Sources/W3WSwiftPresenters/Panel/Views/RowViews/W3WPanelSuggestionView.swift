@@ -14,7 +14,7 @@ import W3WSwiftThemes
 struct W3WPanelSuggestionView: View {
   let suggestion: W3WSuggestion
   
-  let language: W3WLanguage?
+  let rfcLanguage: (any W3WRfcLanguageProtocol)?
   
   let translations: W3WTranslationsProtocol?
   
@@ -120,17 +120,17 @@ private extension W3WPanelSuggestionView {
   let s3 = W3WBaseSuggestion(words: "zz.zz.zz", country: W3WBaseCountry(code: "ZZ"), nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
   let s4 = W3WBaseSuggestion(words: "reallyreally.longverylong.threewordaddress", nearestPlace: "place place placey", distanceToFocus: W3WBaseDistance(meters: 1234.0))
 
-  W3WPanelSuggestionView(suggestion: s1, language: nil, translations: nil) { print("x") }
-  W3WPanelSuggestionView(suggestion: s2, language: nil, translations: nil) { print("x") }
-  W3WPanelSuggestionView(suggestion: s3, language: nil, translations: nil) { print("x") }
-  W3WPanelSuggestionView(suggestion: s4, language: nil, translations: nil) { print("x") }
-  W3WPanelSuggestionView(suggestion: s1, language: nil, translations: nil) { print("x") }
-  W3WPanelSuggestionView(suggestion: s2, language: nil, translations: nil) { print("x") }
-  W3WPanelSuggestionView(suggestion: s3, language: nil, translations: nil) { print("x") }
-  W3WPanelSuggestionView(suggestion: s4, language: nil, translations: nil) { print("x") }
-  W3WPanelSuggestionView(suggestion: s2, language: nil, translations: nil) { print("x") }
-  W3WPanelSuggestionView(suggestion: s3, language: nil, translations: nil) { print("x") }
-  W3WPanelSuggestionView(suggestion: s1, language: nil, translations: nil) { print("x") }
-  W3WPanelSuggestionView(suggestion: s2, language: nil, translations: nil) { print("x") }
-  W3WPanelSuggestionView(suggestion: s3, language: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: s1, rfcLanguage: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: s2, rfcLanguage: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: s3, rfcLanguage: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: s4, rfcLanguage: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: s1, rfcLanguage: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: s2, rfcLanguage: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: s3, rfcLanguage: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: s4, rfcLanguage: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: s2, rfcLanguage: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: s3, rfcLanguage: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: s1, rfcLanguage: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: s2, rfcLanguage: nil, translations: nil) { print("x") }
+  W3WPanelSuggestionView(suggestion: s3, rfcLanguage: nil, translations: nil) { print("x") }
 }

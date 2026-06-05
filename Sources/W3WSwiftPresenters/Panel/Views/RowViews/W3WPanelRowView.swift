@@ -41,7 +41,7 @@ struct W3WPanelRowView<ViewModel: W3WPanelViewModelProtocol>: View {
         toggleSelection: viewModel.toggleSelection,
         viewSelection: viewModel.viewSelection,
         theme: viewModel.theme,
-        language: viewModel.language,
+        rfcLanguage: viewModel.rfcLanguage,
         translations: viewModel.translations)
     }
   }

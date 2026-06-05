@@ -59,7 +59,7 @@ public class W3WPanelViewModel: W3WPanelViewModelProtocol, W3WEventSubscriberPro
   
   @Published public var theme: W3WTheme?
   
-  @Published public var language: W3WLanguage?
+  @Published public var rfcLanguage: (any W3WRfcLanguageProtocol)?
   
   public let translations: W3WTranslationsProtocol
   
@@ -99,18 +99,18 @@ public class W3WPanelViewModel: W3WPanelViewModelProtocol, W3WEventSubscriberPro
     mode: Mode,
     isProUser: W3WLive<Bool>,
     theme: W3WLive<W3WTheme?>? = nil,
-    language: W3WLive<W3WLanguage?>? = nil,
+    rfcLanguage: W3WLive<(any W3WRfcLanguageProtocol)?>? = nil,
     translations: W3WTranslationsProtocol
   ) {
     self.mode = mode
     self.translations = translations
-    
+
     subscribe(to: theme) { [weak self] theme in
       self?.theme = theme
     }
-    
-    subscribe(to: language) { [weak self] language in
-      self?.handle(language: language)
+
+    subscribe(to: rfcLanguage) { [weak self] rfcLanguage in
+      self?.handle(rfcLanguage: rfcLanguage)
     }
     
     subscribe(to: isProUser) { [weak self] isProUser in
@@ -170,8 +170,8 @@ public class W3WPanelViewModel: W3WPanelViewModelProtocol, W3WEventSubscriberPro
 // MARK: - Helpers
 private extension W3WPanelViewModel {
   /// handle a language change
-  func handle(language: W3WLanguage?) {
-    self.language = language
+  func handle(rfcLanguage: (any W3WRfcLanguageProtocol)?) {
+    self.rfcLanguage = rfcLanguage
   }
   
   /// handle a scheme change

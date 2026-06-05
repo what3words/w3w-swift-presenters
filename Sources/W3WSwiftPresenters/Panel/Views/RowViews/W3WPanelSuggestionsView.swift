@@ -24,7 +24,7 @@ struct W3WPanelSuggestionsView: View {
   
   @State var theme: W3WTheme?
 
-  @State var language: W3WLanguage?
+  @State var rfcLanguage: (any W3WRfcLanguageProtocol)?
   
   let translations: W3WTranslationsProtocol?
   
@@ -35,7 +35,7 @@ struct W3WPanelSuggestionsView: View {
         ForEach(suggestions, id: \.words) { suggestion in
           W3WPanelSuggestionView(
             suggestion: suggestion,
-            language: language,
+            rfcLanguage: rfcLanguage,
             translations: translations,
             isSelectable: isSelectable,
             isSelected: isSelected(suggestion),
