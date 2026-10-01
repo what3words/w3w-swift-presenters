@@ -7,7 +7,7 @@ let package = Package(
     name: "w3w-swift-presenters",
 
     platforms: [
-      .iOS(.v13), .tvOS(.v13), .watchOS(.v6)
+      .iOS("16.1"), .tvOS(.v13), .watchOS(.v6)
     ],
 
     products: [
